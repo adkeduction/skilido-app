@@ -290,14 +290,6 @@
   const EXPLORE = ["learn", "passport", "fly", "bazaar", "spotlight", "ayati", "club", "lifelab"];
   function homeHTML() {
     const left = TODOS.filter(([id]) => !done.has(id)).length;
-    const kit3l = `<span class="kit kit-3l"><span class="kit-h"></span><span class="kit-f">
-        <img src="assets/brand/skilido-dark.webp" alt="" width="70" height="21"><span class="kit-3">3L</span>
-        <b class="kit-name">StoryBox</b><small>My Little Stage</small>
-        <span class="kit-ics">${ic("book")}${ic("mask")}${ic("star")}</span></span><span class="kit-side"></span></span>`;
-    const kitLeap = `<span class="kit kit-leap"><span class="kit-h"></span><span class="kit-f">
-        <img src="assets/brand/skilido-dark.webp" alt="" width="64" height="19"><span class="kit-pill">LEAP</span>
-        <small>Young Founders Kit</small>
-        <span class="kit-ics">${ic("bulb")}${ic("rocket")}${ic("store")}</span></span><span class="kit-side"></span></span>`;
     return `
     <div class="dash">
       <section class="hx">
@@ -306,7 +298,7 @@
           <p>Real-world learning for confident, future-ready kids.</p>
           <a class="btn btn-sun btn-lg" href="#/learn">Start learning ${ic("arrow")}</a>
         </div>
-        <div class="hx-art" aria-hidden="true">${kit3l}${kitLeap}<i class="ray r1"></i><i class="ray r2"></i><i class="ray r3"></i><span class="hx-floor"></span></div>
+        <div class="hx-art"><span class="hx-pic float">${art("kits", "Skilido 3L StoryBox and LEAP Young Founders Kit")}</span><span class="hx-floor" aria-hidden="true"></span></div>
       </section>
 
       <section class="explore" aria-labelledby="ex-h">
@@ -314,12 +306,12 @@
         <div class="ex-grid">${EXPLORE.map((k, i) => {
           const isP = !!PRODUCTS[k], x = isP ? PRODUCTS[k] : PLATFORMS[k];
           return `<a class="ext rv" ${isP ? `data-p="${k}" href="#/${k}"` : `data-x="${k}" href="${x.url}"`} style="--c:${x.c};--i:${i}">
-            <span class="pc-art">${gi(x.icon, x.c, "gi-ex")}</span><b>${x.name}</b><small>${TILE_SUB[k]}</small>${isP ? "" : `<span class="ex-out" aria-label="Opens its own website">${ic("ext")}</span>`}</a>`;
+            <span class="pc-art">${art("ic-" + k, "", "ic3d")}</span><b>${x.name}</b><small>${TILE_SUB[k]}</small>${isP ? "" : `<span class="ex-out" aria-label="Opens its own website">${ic("ext")}</span>`}</a>`;
         }).join("")}</div>
       </section>
 
       <a class="nextact rv" href="#/learn/leap">
-        ${gi("rocket", "#F26B1D", "gi-thumb")}
+        <span class="na-pic">${art("rocket")}</span>
         <span class="na-t"><small>Your next LEAP activity</small><b>Find a problem worth solving</b><span>Continue Module 4 · Picking the best problem</span></span>
         <span class="na-p">${bar(62, "#22C55E")}<em>62%</em></span>
         <span class="btn btn-navy">Continue ${ic("arrow")}</span>
@@ -384,6 +376,8 @@
 
   /* ---------- shared building blocks ---------- */
   // glossy icon tile, the signature element of the portal design
+  // artwork cut from the Skilido design references (assets/art)
+  const art = (name, alt = "", cls = "") => `<img class="art ${cls}" src="assets/art/${name}.webp" alt="${alt}" decoding="async">`;
   const gi = (icon, c, size = "") => `<span class="gi ${size}"${c ? ` style="--c:${c}"` : ""}>${ic(icon)}</span>`;
   const swoosh = (word) => `<span class="sw">${word}<svg viewBox="0 0 220 22" preserveAspectRatio="none" aria-hidden="true"><path d="M4 15 C 60 4, 150 3, 216 12"/></svg></span>`;
   const ring = (pct, c, cls = "") => `<div class="ring ${cls}" style="--c:${c};--to:${pct}" role="img" aria-label="${pct} percent"><div><b data-count="${pct}">0</b><small>%</small></div></div>`;
@@ -406,8 +400,7 @@
       const tiles = [["book", "#0A84FF", "Learn", "Watch · read · understand", "#/learn/stories"], ["target", "#F26B1D", "Practise", "Try activities, build skills", "#/learn/leap"],
         ["checkbox", "#16A34A", "Assessment", "Show what you've learned", "#/passport/skills"], ["video", "#7C3AED", "Join class", "Live and virtual sessions", "scroll:classes"], ["home", "#E11D74", "Home tasks", "Do them together", "#/learn/home"]];
       return hero(`Learn. Practise. ${swoosh("Prove.")}`, `${DEMO.child}'s 3L and LEAP learning space.`,
-        `<span class="art-main">${gi("book", "#0A84FF", "gi-hero")}</span>
-         <span class="spark s1">${ic("sparkle")}</span><span class="spark s2">${ic("star")}</span>`,
+        `<span class="hero-pic float">${art("learn-hero")}</span>`,
         `<a class="btn btn-sun" href="#/learn/leap">Continue LEAP ${ic("arrow")}</a><a class="tlink tlink-lg" href="#/learn/stories">Open Story 6 ${ic("chev")}</a>`) + `
       <nav class="qtiles" aria-label="Learning shortcuts">${tiles.map(([i, c, t, s, href], n) => href.startsWith("scroll:")
         ? `<button class="qt rv" data-scroll="${href.slice(7)}" style="--c:${c};--i:${n}"><span class="qi">${ic(i)}</span><b>${t}</b><small>${s}</small></button>`
@@ -416,7 +409,7 @@
       <div class="duo">
         <section class="panel rv" aria-labelledby="cp-h">
           <h2 id="cp-h" class="panel-h">My current programmes</h2>
-          <a class="prow" href="#/learn/leap" style="--c:#F26B1D">${gi("rocket", "#F26B1D", "gi-thumb")}<span class="prow-t"><b>LEAP · Young Founders</b><small>Module 4: Find a problem worth solving</small><span class="prow-bar">${bar(62, "#22C55E")}<em>62%</em></span></span><span class="go">${ic("arrow")}</span></a>
+          <a class="prow" href="#/learn/leap" style="--c:#F26B1D"><span class="thumb-pic">${art("prog-rocket")}</span><span class="prow-t"><b>LEAP · Young Founders</b><small>Module 4: Find a problem worth solving</small><span class="prow-bar">${bar(62, "#22C55E")}<em>62%</em></span></span><span class="go">${ic("arrow")}</span></a>
           <a class="prow" href="#/learn/stories" style="--c:#C026D3">${gi("mask", "#C026D3", "gi-thumb")}<span class="prow-t"><b>3L Dramatics · Season 2</b><small>Story 6: The Clever Crow</small><span class="prow-bar">${bar(40, "#22C55E")}<em>40%</em></span></span><span class="go">${ic("arrow")}</span></a>
         </section>
         <section class="panel rv" aria-labelledby="td-h">
@@ -430,7 +423,7 @@
       <section class="panel rv" id="classes" aria-labelledby="uc-h">
         <div class="panel-row"><h2 id="uc-h" class="panel-h">Upcoming classes</h2><a class="tlink" href="#/learn/leap">See LEAP ${ic("chev")}</a></div>
         <div class="classes">
-          <div class="cls" style="--c:#0A84FF;--d:#0040A8"><span class="cls-art"><span class="badge-live"><i></i>Next</span>${gi("rocket", "#F26B1D", "gi-md")}</span>
+          <div class="cls" style="--c:#0A84FF;--d:#0040A8"><span class="cls-art cls-photo">${art("teacher", "Ms. Priya, LEAP teacher")}<span class="badge-live"><i></i>Next</span></span>
             <span class="cls-t"><b>LEAP class</b><span>Picking the best problem</span><small>${ic("cal")}Tuesday · with Ms. Priya</small></span>
             <button class="btn btn-acc btn-sm" data-join>${ic("play")}<span>Remind me</span></button></div>
           <div class="cls" style="--c:#C026D3;--d:#6B0F78"><span class="cls-art"><span class="badge-live"><i></i>Stage</span>${gi("mask", "#C026D3", "gi-md")}</span>
@@ -512,10 +505,10 @@
       const gained = SKILLS.filter(([, v, f]) => f && v > f).length;
       const low = [...SKILLS].sort((a, b) => a[1] - b[1])[0];
       return hero(`My Skill ${swoosh("Passport")}`, "A lifelong record of skills, growth and achievements.",
-        `<span class="book"><span class="book-in"><img src="assets/brand/skilido-light.webp" alt="" width="90" height="27"><b>SKILL<br>PASSPORT</b><span class="book-seal">${ic("award")}</span></span></span>`) + `
+        `<span class="pass-pics"><span class="pp-boy float">${art("pass-boy")}</span><span class="pp-book float f2">${art("pass-book")}</span></span>`) + `
       <section class="pp-top">
         <div class="panel who rv">
-          <span class="avatar-xl">A</span>
+          <span class="avatar-xl avatar-pic">${art("aarav", "Aarav")}</span>
           <div><b class="who-n">Aarav Sharma</b><small>Grade 5 · Accord School, Tirupati</small><small>Skilido ID <b>SK-0425</b></small>
             <span class="life">${ic("shield")}Lifelong passport, LKG to Grade 10</span></div>
         </div>
@@ -539,7 +532,7 @@
         </div>
         <div class="panel rv"><div class="panel-row"><h2 class="panel-h">${ic("star", "ic star")}Recommended for Aarav</h2><button class="arrow-btn" data-slide="1" aria-label="Next recommendations">${ic("arrow")}</button></div>
           <div class="recs" id="recs">${REC_LIST
-            .map(([i, c, t, s, tag, href], n) => `<a class="rec" href="${href}" style="--c:${c};--i:${n}"><span class="rec-art">${gi(i, c, "gi-md")}</span><b>${t}</b><small>${s}</small><span class="rec-f"><span class="tag">${tag}</span><span class="go">${ic("arrow")}</span></span></a>`).join("")}</div>
+            .map(([i, c, t, s, tag, href], n) => `<a class="rec" href="${href}" style="--c:${c};--i:${n}"><span class="rec-art${n < 3 ? " rec-photo" : ""}">${n < 3 ? art("rec-" + (n + 1)) : gi(i, c, "gi-md")}</span><b>${t}</b><small>${s}</small><span class="rec-f"><span class="tag">${tag}</span><span class="go">${ic("arrow")}</span></span></a>`).join("")}</div>
         </div>
       </section>
       <section class="duo">
@@ -563,7 +556,7 @@
           <p class="fine">${ic("shield")}Only rubric assessments by teachers or Skill Champions move a level.</p></div>
       </div>`;
     if (tab === "recs") return banner("bulb", "Recommendations", "Picked from the skills with the most room to grow") + `
-      <div class="recgrid">${REC_LIST.map(([i, c, t, s, tag, href, sk], n) => `<a class="rec rec-l rv" href="${href}" style="--c:${c};--i:${n}"><span class="rec-art">${gi(i, c, "gi-md")}</span><b>${t}</b><small>${s}</small><span class="rec-why">${ic("target")}Builds ${sk}</span><span class="rec-f"><span class="tag">${tag}</span><span class="go">${ic("arrow")}</span></span></a>`).join("")}</div>`;
+      <div class="recgrid">${REC_LIST.map(([i, c, t, s, tag, href, sk], n) => `<a class="rec rec-l rv" href="${href}" style="--c:${c};--i:${n}"><span class="rec-art${n < 3 ? " rec-photo" : ""}">${n < 3 ? art("rec-" + (n + 1)) : gi(i, c, "gi-md")}</span><b>${t}</b><small>${s}</small><span class="rec-why">${ic("target")}Builds ${sk}</span><span class="rec-f"><span class="tag">${tag}</span><span class="go">${ic("arrow")}</span></span></a>`).join("")}</div>`;
     return banner("award", "Badges", "Earned through verified evidence") + `
       <div class="badges">${[["mic", "Confident Speaker", "#F59E0B"], ["drop", "Water Saver", "#0EA5E9"], ["mask", "3L Performer", "#C026D3"], ["bulb", "Problem Spotter", "#16A34A"], ["rocket", "First Venture", null]]
         .map(([i, t, c], n) => `<div class="badge rv ${c ? "" : "locked"}" style="--c:${c || "#A1A1AA"};--i:${n}"><span class="medal">${ic(c ? i : "lock")}</span><b>${t}</b><small>${c ? "Earned" : "Locked"}</small></div>`).join("")}</div>`;
@@ -579,6 +572,9 @@
     ["heart", "Parenting courses", "Confidence, screen time, money skills and exams.", 1, 6, "#0A84FF", "Live + self-paced"],
   ];
   const progCard = ([i, t, d, dn, n, c, tag], k) => `<a class="prc rv" href="#/ayati/modules" style="--c:${c};--i:${k}">${gi(i, c)}<span class="tag">${tag}</span><b>${t}</b><p>${d}</p>${bar(Math.round(dn / n * 100), c)}<small>${dn} of ${n} modules</small></a>`;
+  const VIDART = { "How to talk about failure": "vid-3", "Supporting your child on stage": "vid-1", "Money conversations with kids": "vid-2", "Growth mindset for parents": "vid-4",
+    "The Skilido way": "vid-4", "Running a 3L session": "vid-1", "Coaching a LEAP team": "vid-2", "Assessing with the rubric": "vid-3" };
+  const COURSEART = { "3L Facilitation": "course-2", "LEAP Facilitation": "course-1", "Parenting courses": "course-1" };
   function ayatiRoleBlock() {
     const t = ayatiRole === "teacher";
     const vids = t
@@ -589,11 +585,11 @@
     const lid = t ? "lv-t" : "lv-p";
     return `
       <section class="sec-s">${head(`${gi("play", "#7C3AED", "gi-xs")}Learn and watch`, t ? "Core modules for Skill Champions." : "Short, practical videos for home.", `<a class="tlink" href="#/ayati/${t ? "modules" : "live"}">View all ${ic("chev")}</a>`)}
-        <div class="vids">${vids.map(([i, c, title, meta, dur], n) => `<button class="vid rv" style="--c:${c};--i:${n}" data-toast="Videos play inside Ayati Academy when it launches."><span class="vid-art">${gi(i, c, "gi-md")}<span class="vid-play">${ic("play")}</span><span class="dur">${dur}</span></span><b>${title}</b><small>${meta}</small></button>`).join("")}</div>
+        <div class="vids">${vids.map(([i, c, title, meta, dur], n) => `<button class="vid rv" style="--c:${c};--i:${n}" data-toast="Videos play inside Ayati Academy when it launches."><span class="vid-art${VIDART[title] ? " vid-photo" : ""}">${VIDART[title] ? art(VIDART[title]) : gi(i, c, "gi-md")}<span class="vid-play">${ic("play")}</span><span class="dur">${dur}</span></span><b>${title}</b><small>${meta}</small></button>`).join("")}</div>
       </section>
       <section class="duo">
         <div class="panel rv"><h2 class="panel-h">${gi("award", "#7C3AED", "gi-xs")}${t ? "Certification courses" : "Courses for you"}</h2><p class="muted">${t ? "Get certified. Build your expertise." : "Learn at your own pace."}</p>
-          <div class="clist">${courses.map(([i, title, d, dn, n, c, tag]) => `<a class="crow" href="#/ayati/${tag === "Earned" ? "certificates" : "programs"}" style="--c:${c}">${gi(i, c, "gi-thumb")}<span><b>${title}</b><small>${ic(tag === "Earned" ? "award" : "book")}${tag === "Earned" ? d : `${n} modules · ${tag}`}</small></span><span class="go">${ic("arrow")}</span></a>`).join("")}</div>
+          <div class="clist">${courses.map(([i, title, d, dn, n, c, tag]) => `<a class="crow" href="#/ayati/${tag === "Earned" ? "certificates" : "programs"}" style="--c:${c}">${COURSEART[title] ? `<span class="thumb-pic">${art(COURSEART[title])}</span>` : gi(i, c, "gi-thumb")}<span><b>${title}</b><small>${ic(tag === "Earned" ? "award" : "book")}${tag === "Earned" ? d : `${n} modules · ${tag}`}</small></span><span class="go">${ic("arrow")}</span></a>`).join("")}</div>
         </div>
         <div class="panel rv"><h2 class="panel-h">${gi("folder", "#7C3AED", "gi-xs")}Resources</h2><p class="muted">Ready-to-use materials for classroom and home.</p>
           <div class="seg2" role="tablist"><span class="seg2-pill" aria-hidden="true"></span>${[["teachers", "For teachers"], ["parents", "For parents"]].map(([k, l]) => `<button role="tab" data-res="${k}" aria-selected="${resTab === k}">${l}</button>`).join("")}</div>
@@ -601,7 +597,7 @@
         </div>
       </section>
       <section class="panel rv">${head(`${gi("cal", "#7C3AED", "gi-xs")}Virtual expert sessions`, "Live sessions with education and parenting experts.", `<a class="tlink" href="#/ayati/live">All sessions ${ic("chev")}</a>`)}
-        <div class="xsess"><span class="xs-art">${gi(t ? "users" : "mic", "#7C3AED", "gi-md")}</span>
+        <div class="xsess"><span class="xs-art xs-photo">${art("expert", "Session expert")}</span>
           <span class="xs-t"><span class="badge-live"><i></i>Live</span><b>${live[1]}</b><small>${live[2]}</small><small>${ic("cal")}${live[0]}</small></span>
           <button class="btn btn-acc" data-register="${lid}" aria-pressed="${registered.has(lid)}">${registered.has(lid) ? `${ic("check")}Registered` : `Register now ${ic("arrow")}`}</button></div>
       </section>`;
@@ -615,8 +611,7 @@
   function ayatiPane(tab) {
     const live = (when, t, d, btn, id) => `<div class="card live rv"><span class="badge-live"><i></i>${when}</span><b>${t}</b><small>${d}</small><button class="btn btn-white btn-sm" data-register="${id}" aria-pressed="${registered.has(id)}">${registered.has(id) ? `${ic("check")}Registered` : btn}</button></div>`;
     if (tab === "overview") return hero(`<span class="brandblk"><span class="bb-l">${gi("cap", "#7C3AED", "gi-bb")}<span><span class="bb-n">Ayati Academy</span><span class="bb-t">Learn · Train · Empower</span></span></span><span class="bb-d" aria-hidden="true"></span><span class="bb-r">For educators ${swoosh("&amp; parents")}</span></span>`, "Practical learning, expert guidance and certification for better child development.",
-        `<span class="art-main">${gi("award", "#7C3AED", "gi-hero")}</span>
-         <span class="spark s1">${ic("sparkle")}</span><span class="spark s2">${ic("star")}</span>`,
+        `<span class="hero-pic float">${art("ayati-family")}</span>`,
         `<a class="btn btn-sun" href="#/ayati/modules">Continue Module 4 ${ic("arrow")}</a><a class="tlink tlink-lg" href="#/ayati/programs">All courses ${ic("chev")}</a>`) + `
       <section class="iam rv" aria-label="I am a">
         <span class="iam-l">I am a</span>
@@ -758,8 +753,14 @@
 
   /* ================= enhancers ================= */
   let io = null;
+  let floatIO = null;
   function enhance(scope) {
     // reveal on scroll
+    // pause ambient loops while they are off screen
+    if ("IntersectionObserver" in window) {
+      if (!floatIO) floatIO = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle("paused", !e.isIntersecting)));
+      $$(".float", scope).forEach((el) => floatIO.observe(el));
+    }
     if ("IntersectionObserver" in window && !reduce.matches) {
       if (!io) io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -6% 0px" });
       $$(".rv:not(.in)", scope).forEach((el) => io.observe(el));

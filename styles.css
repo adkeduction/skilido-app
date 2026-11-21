@@ -975,3 +975,61 @@ html[data-dir="tab-back"]::view-transition-new(pane) { animation: vtLi .4s var(-
   .ring { --p: var(--to); }
   .rv:not(.in) { opacity: 1; transform: none; }
 }
+
+/* ================= reference artwork (assets/art) ================= */
+:root { --m-out: cubic-bezier(0.32, 0.72, 0, 1); --m-press: 150ms; --m-move: 300ms; }
+.art { display: block; width: 100%; height: 100%; object-fit: cover; user-select: none; -webkit-user-drag: none; }
+/* gentle ambient float on hero artwork; paused off screen by JS */
+.float { animation: floatY 6s ease-in-out infinite; }
+.float.f2 { animation-duration: 7s; animation-delay: -2.4s; }
+.float.paused { animation-play-state: paused; }
+@keyframes floatY { 50% { transform: translateY(-6px) scale(1.01); } }
+
+/* home hero kits */
+.hx-art { align-items: center; height: auto; padding: 4px 16px 22px; }
+@media (min-width: 768px) { .hx-art { height: 250px; padding: 0; } }
+@media (min-width: 1100px) { .hx-art { height: 280px; } }
+.hx-pic { display: block; width: min(100%, 420px); aspect-ratio: 610 / 280; border-radius: 22px; overflow: hidden; box-shadow: 0 26px 40px -28px rgba(11, 24, 70, .55); }
+.hx-pic .art { animation: picIn .7s var(--m-out) .1s both; }
+@keyframes picIn { from { opacity: 0; transform: translateY(16px) scale(.97); } }
+@media (min-width: 1100px) { .hx-pic { width: min(100%, 540px); } }
+
+/* 3D icons on Explore tiles */
+.ext .pc-art { width: 84px; height: 58px; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 20px -14px var(--c); transition: transform var(--m-press) var(--m-out); }
+.ic3d { object-fit: cover; transform: scale(1.04); }
+@media (min-width: 1100px) { .ext .pc-art { width: 96px; height: 66px; } }
+@media (hover: hover) and (pointer: fine) { .ext:hover .pc-art { transform: translateY(-4px) rotate(-3deg); } }
+
+/* next activity rocket */
+.na-pic { grid-area: i; width: 64px; height: 64px; border-radius: 18px; overflow: hidden; flex-shrink: 0; }
+.na-pic .art { transition: transform var(--m-move) var(--m-out); }
+@media (hover: hover) and (pointer: fine) { .nextact:hover .na-pic .art { transform: translate(2px, -2px); } }
+
+/* product heroes with artwork */
+.phx-art:has(img) .ray { display: none; }
+.hero-pic { position: absolute; inset: 0 16px 14px; border-radius: 22px; overflow: hidden; box-shadow: 0 24px 40px -28px rgba(11, 24, 70, .6); }
+.hero-pic .art { animation: picIn .7s var(--m-out) .1s both; }
+.pass-pics { position: absolute; inset: 0 16px 14px; display: flex; align-items: center; justify-content: center; gap: 14px; }
+.pp-boy, .pp-book { display: block; height: 100%; border-radius: 22px; overflow: hidden; }
+.pp-boy { aspect-ratio: 278 / 212; }
+.pp-book { aspect-ratio: 235 / 210; }
+.pp-boy .art, .pp-book .art { animation: picIn .7s var(--m-out) both; }
+.pp-book .art { animation-delay: .1s; }
+@media (min-width: 768px) { .hero-pic, .pass-pics { inset: 0; } }
+
+/* thumbnails and photo cards */
+.thumb-pic { width: 64px; height: 64px; flex-shrink: 0; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 18px -12px rgba(11, 24, 70, .5); }
+.cls-photo { overflow: hidden; background: none; }
+.cls-photo::after { display: none; }
+.cls-photo .badge-live { position: absolute; left: 6px; top: 6px; z-index: 1; }
+.avatar-pic { overflow: hidden; background: none; box-shadow: 0 0 0 4px #fff, 0 10px 20px -10px rgba(11, 24, 70, .5); }
+.rec-photo, .vid-photo { padding: 0; overflow: hidden; background: none; }
+.vid-photo .vid-play { display: none; }
+.xs-photo { overflow: hidden; background: none; }
+
+/* hover: photos zoom gently inside their frame (pointer devices only) */
+.rec-photo .art, .vid-photo .art, .thumb-pic .art, .cls-photo .art { transition: transform 300ms var(--m-out); }
+@media (hover: hover) and (pointer: fine) {
+  .rec:hover .rec-photo .art, .vid:hover .vid-photo .art, .prow:hover .thumb-pic .art, .crow:hover .thumb-pic .art, .cls:hover .cls-photo .art { transform: scale(1.05); }
+}
+@media (prefers-reduced-motion: reduce) { .float { animation: none; } }
