@@ -976,48 +976,100 @@ html[data-dir="tab-back"]::view-transition-new(pane) { animation: vtLi .4s var(-
   .rv:not(.in) { opacity: 1; transform: none; }
 }
 
-/* ================= reference artwork (assets/art) ================= */
-:root { --m-out: cubic-bezier(0.32, 0.72, 0, 1); --m-press: 150ms; --m-move: 300ms; }
+/* ================= reference artwork, blended into the page ================= */
+:root {
+  --m-out: cubic-bezier(0.32, 0.72, 0, 1);      /* entrances, presses */
+  --m-move: cubic-bezier(0.77, 0, 0.175, 1);    /* moves in place */
+  --m-pop: cubic-bezier(0.34, 1.56, 0.64, 1);   /* playful overshoot for objects */
+  --t-press: 150ms; --t-move: 300ms; --t-pop: 450ms;
+}
 .art { display: block; width: 100%; height: 100%; object-fit: cover; user-select: none; -webkit-user-drag: none; }
-/* gentle ambient float on hero artwork; paused off screen by JS */
+/* ambient float (sine-like ease), paused off screen by JS */
 .float { animation: floatY 6s ease-in-out infinite; }
-.float.f2 { animation-duration: 7s; animation-delay: -2.4s; }
+.float.f2 { animation-duration: 7.2s; animation-delay: -2.4s; }
 .float.paused { animation-play-state: paused; }
-@keyframes floatY { 50% { transform: translateY(-6px) scale(1.01); } }
+@keyframes floatY { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+@keyframes picIn { from { opacity: 0; transform: translateY(18px) scale(.96); } }
 
-/* home hero kits */
-.hx-art { align-items: center; height: auto; padding: 4px 16px 22px; }
-@media (min-width: 768px) { .hx-art { height: 250px; padding: 0; } }
-@media (min-width: 1100px) { .hx-art { height: 280px; } }
-.hx-pic { display: block; width: min(100%, 420px); aspect-ratio: 610 / 280; border-radius: 22px; overflow: hidden; box-shadow: 0 26px 40px -28px rgba(11, 24, 70, .55); }
-.hx-pic .art { animation: picIn .7s var(--m-out) .1s both; }
-@keyframes picIn { from { opacity: 0; transform: translateY(16px) scale(.97); } }
-@media (min-width: 1100px) { .hx-pic { width: min(100%, 540px); } }
+/* ---------- sparkles & confetti: decoration only ---------- */
+.deco { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.deco i { position: absolute; border-radius: 50%; opacity: .7; }
+.deco .c1 { width: 10px; height: 10px; left: 6%; top: 12%; background: #FFC72C; }
+.deco .c2 { width: 7px; height: 7px; left: 42%; top: 8%; background: #F472B6; }
+.deco .c3 { width: 12px; height: 12px; left: 30%; bottom: 10%; background: #60A5FA; }
+.deco .c4 { width: 8px; height: 8px; right: 6%; bottom: 18%; background: #34D399; }
+.deco .c5 { width: 14px; height: 6px; border-radius: 4px; left: 50%; bottom: 22%; background: #A78BFA; rotate: 30deg; }
+.deco .st { width: auto; height: auto; border-radius: 0; opacity: 1; color: #FFC72C; animation: twinkle 3.4s ease-in-out infinite; }
+.deco .st .ic { width: 20px; height: 20px; fill: currentColor; stroke: #E0A100; stroke-width: 1; }
+.deco .s-a { right: 44%; top: 14%; }
+.deco .s-b { right: 5%; top: 10%; animation-delay: -1.2s; }
+.deco .s-b .ic { width: 14px; height: 14px; }
+@keyframes twinkle { 0%, 100% { scale: 1; opacity: 1; } 50% { scale: .6; opacity: .5; } }
 
-/* 3D icons on Explore tiles */
-.ext .pc-art { width: 84px; height: 58px; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 20px -14px var(--c); transition: transform var(--m-press) var(--m-out); }
-.ic3d { object-fit: cover; transform: scale(1.04); }
-@media (min-width: 1100px) { .ext .pc-art { width: 96px; height: 66px; } }
-@media (hover: hover) and (pointer: fine) { .ext:hover .pc-art { transform: translateY(-4px) rotate(-3deg); } }
+/* ---------- home hero ---------- */
+.hello { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 6px 12px 6px 6px; border-radius: 999px; background: rgba(255, 255, 255, .8); box-shadow: 0 6px 16px -10px rgba(11, 24, 70, .35); font-size: 13.5px; font-weight: 600; color: #3B4466; animation: rise .5s var(--m-out) both; }
+.hello .av-s { width: 26px; height: 26px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+.hx { background: radial-gradient(55% 80% at 82% 60%, #FFF1CF, transparent 70%), radial-gradient(60% 80% at 0% 100%, #DCE8FF, transparent 70%), linear-gradient(135deg, #FFFDF7, #F3F0FF); }
+.hx-art { align-items: center; height: auto; padding: 0 0 8px; margin: 6px -20px 0; }
+.hx-pic { position: relative; display: block; width: min(100%, 460px); aspect-ratio: 610 / 280; }
+.hx-pic .art { animation: picIn .8s var(--m-out) .12s both;
+  -webkit-mask-image: radial-gradient(ellipse 54% 56% at 50% 50%, #000 72%, transparent 100%); mask-image: radial-gradient(ellipse 54% 56% at 50% 50%, #000 72%, transparent 100%); }
+.hx-floor { bottom: 2px; }
+@media (min-width: 768px) { .hx-art { height: 260px; margin: 0; padding: 0; } }
+@media (min-width: 1100px) { .hx-art { height: 300px; } .hx-pic { width: min(100%, 580px); } }
 
-/* next activity rocket */
-.na-pic { grid-area: i; width: 64px; height: 64px; border-radius: 18px; overflow: hidden; flex-shrink: 0; }
-.na-pic .art { transition: transform var(--m-move) var(--m-out); }
-@media (hover: hover) and (pointer: fine) { .nextact:hover .na-pic .art { transform: translate(2px, -2px); } }
+/* ---------- Explore tiles: floating 3D icons ---------- */
+.ext .pc-art { width: 82px; height: 60px; display: flex; align-items: center; justify-content: center; overflow: visible; border-radius: 0; box-shadow: none;
+  filter: drop-shadow(0 10px 10px color-mix(in srgb, var(--c) 40%, transparent)); transition: transform var(--t-pop) var(--m-pop), filter var(--t-move) var(--m-out); }
+.ic3d { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; transform: none; }
+.ext { transition: transform var(--t-move) var(--m-out), box-shadow var(--t-move) var(--m-out), background-color var(--t-move); }
+.ext::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--c) 35%, transparent); opacity: 0; transition: opacity var(--t-move); }
+.ext:active .pc-art { transform: scale(1.08, .9); transition-duration: 120ms; }
+@media (min-width: 1100px) { .ext .pc-art { width: 96px; height: 70px; } }
+@media (hover: hover) and (pointer: fine) {
+  .ext:hover .pc-art { transform: translateY(-6px) rotate(-6deg) scale(1.08); filter: drop-shadow(0 18px 14px color-mix(in srgb, var(--c) 45%, transparent)); }
+  .ext:hover::after { opacity: 1; }
+  .ext:hover .gi { transform: none; }
+}
+.ex-grid .ext.rv:not(.in) { transform: translateY(20px) scale(.95); }
 
-/* product heroes with artwork */
-.phx-art:has(img) .ray { display: none; }
-.hero-pic { position: absolute; inset: 0 16px 14px; border-radius: 22px; overflow: hidden; box-shadow: 0 24px 40px -28px rgba(11, 24, 70, .6); }
-.hero-pic .art { animation: picIn .7s var(--m-out) .1s both; }
-.pass-pics { position: absolute; inset: 0 16px 14px; display: flex; align-items: center; justify-content: center; gap: 14px; }
-.pp-boy, .pp-book { display: block; height: 100%; border-radius: 22px; overflow: hidden; }
-.pp-boy { aspect-ratio: 278 / 212; }
-.pp-book { aspect-ratio: 235 / 210; }
-.pp-boy .art, .pp-book .art { animation: picIn .7s var(--m-out) both; }
-.pp-book .art { animation-delay: .1s; }
-@media (min-width: 768px) { .hero-pic, .pass-pics { inset: 0; } }
+/* ---------- next activity rocket ---------- */
+.na-pic { grid-area: i; position: relative; width: 66px; height: 66px; border-radius: 20px; flex-shrink: 0; display: grid; place-items: center; background: radial-gradient(circle at 30% 25%, #FFF, #FFE3CC); }
+.na-pic .art { width: 82%; height: 82%; object-fit: contain; filter: drop-shadow(0 6px 6px rgba(242, 107, 29, .35)); transition: transform var(--t-pop) var(--m-pop); }
+@media (hover: hover) and (pointer: fine) { .nextact:hover .na-pic .art { transform: translate(4px, -5px) rotate(-8deg); } }
 
-/* thumbnails and photo cards */
+/* thumbnail with a cut-out object */
+.thumb-cut { width: 64px; height: 64px; flex-shrink: 0; border-radius: 18px; display: grid; place-items: center; background: radial-gradient(circle at 30% 25%, #fff, color-mix(in srgb, var(--c) 22%, #fff)); }
+.thumb-cut .art { width: 80%; height: 80%; object-fit: contain; filter: drop-shadow(0 6px 6px color-mix(in srgb, var(--c) 35%, transparent)); transition: transform var(--t-pop) var(--m-pop); }
+@media (hover: hover) and (pointer: fine) { .prow:hover .thumb-cut .art { transform: translate(3px, -4px) rotate(-8deg); } }
+
+/* ---------- product heroes: illustration bleeds into the banner ---------- */
+.phx-art:has(img) .ray, .phx-art:has(img) .spark { display: none; }
+.phx:has(.hero-pic) { padding-bottom: 0; }
+.phx:has(.hero-pic) .phx-art { height: 230px; margin: 10px -20px 0; }
+.hero-pic { position: absolute; inset: 0; }
+.hero-pic .art { animation: picIn .8s var(--m-out) .1s both;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 34%); mask-image: linear-gradient(to bottom, transparent 0, #000 34%); }
+.pass-pics { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; }
+.pp-boy { position: relative; height: 100%; flex: 1 1 auto; min-width: 0; max-width: 62%; }
+.pp-boy .art { animation: picIn .8s var(--m-out) both;
+  -webkit-mask-image: radial-gradient(ellipse 60% 62% at 50% 55%, #000 55%, transparent 100%); mask-image: radial-gradient(ellipse 60% 62% at 50% 55%, #000 55%, transparent 100%); }
+.pp-book { position: relative; flex: 0 0 auto; align-self: center; height: 70%; aspect-ratio: 200 / 214; margin: 0 18px 0 24px; rotate: 8deg; filter: drop-shadow(0 22px 20px rgba(11, 24, 70, .45)); }
+.pp-book .art { object-fit: contain; animation: bookIn .9s var(--m-pop) .2s both; }
+@keyframes bookIn { from { opacity: 0; transform: translateY(30px) rotate(-14deg) scale(.85); } }
+@media (min-width: 768px) {
+  .phx:has(.hero-pic), .phx:has(.pass-pics) { padding-top: 40px; padding-bottom: 40px; }
+  .phx:has(.hero-pic) .phx-copy, .phx:has(.pass-pics) .phx-copy { position: relative; z-index: 1; }
+  .phx:has(.hero-pic) .phx-art, .phx:has(.pass-pics) .phx-art { position: absolute; right: 0; top: 0; bottom: 0; width: 50%; height: auto; margin: 0; transform: none; }
+  .hero-pic .art { -webkit-mask-image: linear-gradient(to right, transparent 0, #000 38%); mask-image: linear-gradient(to right, transparent 0, #000 38%); }
+  .pass-pics { justify-content: flex-end; padding-right: 4%; }
+  .pp-boy { max-width: 58%; }
+  .pp-boy .art { -webkit-mask-image: linear-gradient(to right, transparent 0, #000 42%), linear-gradient(to top, transparent 0, #000 0); mask-image: linear-gradient(to right, transparent 0, #000 42%); }
+  .pp-book { height: 78%; }
+}
+@media (min-width: 1100px) { .phx:has(.hero-pic), .phx:has(.pass-pics) { min-height: 320px; } }
+
+/* ---------- photos inside cards (these are meant to read as thumbnails) ---------- */
 .thumb-pic { width: 64px; height: 64px; flex-shrink: 0; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 18px -12px rgba(11, 24, 70, .5); }
 .cls-photo { overflow: hidden; background: none; }
 .cls-photo::after { display: none; }
@@ -1026,10 +1078,21 @@ html[data-dir="tab-back"]::view-transition-new(pane) { animation: vtLi .4s var(-
 .rec-photo, .vid-photo { padding: 0; overflow: hidden; background: none; }
 .vid-photo .vid-play { display: none; }
 .xs-photo { overflow: hidden; background: none; }
-
-/* hover: photos zoom gently inside their frame (pointer devices only) */
-.rec-photo .art, .vid-photo .art, .thumb-pic .art, .cls-photo .art { transition: transform 300ms var(--m-out); }
+.rec-photo .art, .vid-photo .art, .thumb-pic .art, .cls-photo .art { transition: transform 400ms var(--m-out); }
 @media (hover: hover) and (pointer: fine) {
-  .rec:hover .rec-photo .art, .vid:hover .vid-photo .art, .prow:hover .thumb-pic .art, .crow:hover .thumb-pic .art, .cls:hover .cls-photo .art { transform: scale(1.05); }
+  .rec:hover .rec-photo .art, .vid:hover .vid-photo .art, .crow:hover .thumb-pic .art, .cls:hover .cls-photo .art { transform: scale(1.06); }
 }
-@media (prefers-reduced-motion: reduce) { .float { animation: none; } }
+
+/* ---------- premium details ---------- */
+/* primary CTA: light sweep on hover */
+.btn-sun { overflow: hidden; }
+.btn-sun::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .7) 50%, transparent 70%); translate: -120% 0; pointer-events: none; }
+@media (hover: hover) and (pointer: fine) { .btn-sun:hover::after { translate: 120% 0; transition: translate 700ms var(--m-out); } }
+/* My Skilido icons give a small wiggle on hover */
+@media (hover: hover) and (pointer: fine) { .mys:hover .mys-ic { animation: wiggle 500ms var(--m-out); } }
+@keyframes wiggle { 30% { rotate: -10deg; scale: 1.08; } 60% { rotate: 6deg; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .float, .deco .st { animation: none; }
+  .btn-sun::after { display: none; }
+}

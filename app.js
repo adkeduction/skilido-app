@@ -292,8 +292,9 @@
     const left = TODOS.filter(([id]) => !done.has(id)).length;
     return `
     <div class="dash">
-      <section class="hx">
+      <section class="hx">${deco()}
         <div class="hx-copy">
+          <p class="hello"><span class="av-s">${art("aarav")}</span>Hi ${DEMO.child}! Ready to learn today?</p>
           <h1 tabindex="-1">Learn. Build. ${swoosh("Grow.")}</h1>
           <p>Real-world learning for confident, future-ready kids.</p>
           <a class="btn btn-sun btn-lg" href="#/learn">Start learning ${ic("arrow")}</a>
@@ -377,7 +378,8 @@
   /* ---------- shared building blocks ---------- */
   // glossy icon tile, the signature element of the portal design
   // artwork cut from the Skilido design references (assets/art)
-  const art = (name, alt = "", cls = "") => `<img class="art ${cls}" src="assets/art/${name}.webp" alt="${alt}" decoding="async">`;
+  const art = (name, alt = "", cls = "") => `<img class="art ${cls}" src="assets/art/${name}.webp?v=3" alt="${alt}" decoding="async">`;
+  const deco = () => `<span class="deco" aria-hidden="true"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i><i class="c5"></i><i class="st s-a">${ic("sparkle")}</i><i class="st s-b">${ic("star")}</i></span>`;
   const gi = (icon, c, size = "") => `<span class="gi ${size}"${c ? ` style="--c:${c}"` : ""}>${ic(icon)}</span>`;
   const swoosh = (word) => `<span class="sw">${word}<svg viewBox="0 0 220 22" preserveAspectRatio="none" aria-hidden="true"><path d="M4 15 C 60 4, 150 3, 216 12"/></svg></span>`;
   const ring = (pct, c, cls = "") => `<div class="ring ${cls}" style="--c:${c};--to:${pct}" role="img" aria-label="${pct} percent"><div><b data-count="${pct}">0</b><small>%</small></div></div>`;
@@ -386,7 +388,7 @@
   const head = (title, sub, more) => `<div class="sec-h rv"><div><h2>${title}</h2>${sub ? `<p>${sub}</p>` : ""}</div>${more || ""}</div>`;
   // big hero banner for each product's first tab
   const hero = (title, sub, art, ctas = "") => `
-    <section class="phx" data-tilt>
+    <section class="phx" data-tilt>${deco()}
       <div class="phx-copy"><h1 tabindex="-1">${title}</h1><p>${sub}</p>${ctas ? `<div class="ctas">${ctas}</div>` : ""}</div>
       <div class="phx-art" aria-hidden="true">${art}<i class="ray r1"></i><i class="ray r2"></i><i class="ray r3"></i></div>
     </section>`;
@@ -409,7 +411,7 @@
       <div class="duo">
         <section class="panel rv" aria-labelledby="cp-h">
           <h2 id="cp-h" class="panel-h">My current programmes</h2>
-          <a class="prow" href="#/learn/leap" style="--c:#F26B1D"><span class="thumb-pic">${art("prog-rocket")}</span><span class="prow-t"><b>LEAP · Young Founders</b><small>Module 4: Find a problem worth solving</small><span class="prow-bar">${bar(62, "#22C55E")}<em>62%</em></span></span><span class="go">${ic("arrow")}</span></a>
+          <a class="prow" href="#/learn/leap" style="--c:#F26B1D"><span class="thumb-cut">${art("rocket")}</span><span class="prow-t"><b>LEAP · Young Founders</b><small>Module 4: Find a problem worth solving</small><span class="prow-bar">${bar(62, "#22C55E")}<em>62%</em></span></span><span class="go">${ic("arrow")}</span></a>
           <a class="prow" href="#/learn/stories" style="--c:#C026D3">${gi("mask", "#C026D3", "gi-thumb")}<span class="prow-t"><b>3L Dramatics · Season 2</b><small>Story 6: The Clever Crow</small><span class="prow-bar">${bar(40, "#22C55E")}<em>40%</em></span></span><span class="go">${ic("arrow")}</span></a>
         </section>
         <section class="panel rv" aria-labelledby="td-h">
