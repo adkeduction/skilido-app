@@ -285,66 +285,86 @@
     });
   }
 
-  /* ================= HOME (dashboard, reference 1) ================= */
-  const TILE_SUB = { learn: "3L & LEAP", passport: "Verified growth", ayati: "Train & certify", lifelab: "Real-world challenges", fly: "Venture Lab", bazaar: "Kids' products", spotlight: "Talent stage", club: "Icons Family Club" };
-  const EXPLORE = ["learn", "passport", "fly", "bazaar", "spotlight", "ayati", "club", "lifelab"];
+  /* ================= HOME (dashboard) ================= */
+  const EXPLORE = [
+    ["learn", "x-learn", "3L & LEAP programmes with stories, activities and practice"],
+    ["passport", "x-passport", "Track skills, progress and achievements"],
+    ["fly", "x-fly", "A Venture Lab for curious young founders"],
+    ["bazaar", "x-bazaar", "Kids' own creations and products"],
+    ["spotlight", "x-mic", "A stage for every child's talent"],
+    ["ayati", "x-ayati", "Expert-led learning for educators & parents"],
+    ["club", "t-puppets", "The Icons Family Club community"],
+    ["lifelab", "x-lifelab", "Build life skills like confidence, empathy and teamwork"],
+  ];
+  // shared 3D card: pastel tile, floating object, title, text, arrow chip
+  const c3 = ({ tag = "a", attrs = "", c, obj, title, sub, ext = false, cls = "", i = 0, alt = "" }) =>
+    `<${tag} class="c3 rv ${cls}" ${attrs} style="--c:${c};--i:${i}"><span class="c3-obj">${art(obj, alt)}</span><span class="c3-t"><b>${title}</b><small>${sub}</small></span><span class="go3" aria-hidden="true">${ic(ext ? "ext" : "arrow")}</span></${tag}>`;
+  const secHead = (id, title, sub, more = "", center = false) => `<div class="sh3${center ? " sh3-c" : ""}"><h2 id="${id}">${center ? `<i class="rays rays-l" aria-hidden="true"></i>` : `<i class="rays" aria-hidden="true"></i>`}${title}${center ? `<i class="rays rays-r" aria-hidden="true"></i>` : ""}</h2>${sub ? `<p>${sub}</p>` : ""}${more}</div>`;
   function homeHTML() {
     const left = TODOS.filter(([id]) => !done.has(id)).length;
     return `
     <div class="dash">
-      <section class="hx">${deco()}
-        <div class="hx-copy">
-          <p class="hello"><span class="av-s">${art("aarav")}</span>Hi ${DEMO.child}! Ready to learn today?</p>
+      <section class="hx2">${deco()}
+        <div class="hx2-copy">
+          <p class="hello"><span class="av-s">${art("aarav")}</span>Hi ${DEMO.child}! Ready to learn today? ${ic("sparkle", "ic hello-sp")}</p>
           <h1 tabindex="-1">Learn. Build. ${swoosh("Grow.")}</h1>
-          <p>Real-world learning for confident, future-ready kids.</p>
-          <a class="btn btn-sun btn-lg" href="#/learn">Start learning ${ic("arrow")}</a>
+          <p class="hx2-sub">Real-world learning for confident, future-ready kids.</p>
+          <div class="ctas2">
+            <a class="btn btn-sun btn-lg" href="#/learn">${ic("play", "ic ic-solid")}Start learning ${ic("arrow")}</a>
+            <a class="btn btn-glass btn-lg" href="#/learn/home">${ic("cal")}View my plan</a>
+          </div>
+          <ul class="trust">
+            <li style="--c:#7C3AED"><span class="tr-ic">${ic("shield")}</span>Age-appropriate learning</li>
+            <li style="--c:#16A34A"><span class="tr-ic">${ic("chart")}</span>Skill-based growth</li>
+            <li style="--c:#E11D74"><span class="tr-ic">${ic("star")}</span>Trusted by parents & educators</li>
+          </ul>
         </div>
-        <div class="hx-art"><span class="hx-pic float">${art("kits", "Skilido 3L StoryBox and LEAP Young Founders Kit")}</span><span class="hx-floor" aria-hidden="true"></span></div>
+        <div class="hx2-art float">${art("s-home", "The Skilido StoryBox and LEAP kits beside a smiling student")}</div>
       </section>
 
-      <section class="explore" aria-labelledby="ex-h">
-        <h2 id="ex-h" class="ex-h"><i class="tick-l" aria-hidden="true"></i>Explore Skilido<i class="tick-r" aria-hidden="true"></i></h2>
-        <div class="ex-grid">${EXPLORE.map((k, i) => {
+      <section class="sec3" aria-labelledby="ex-h">
+        ${secHead("ex-h", "Explore Skilido", "A complete learning ecosystem for your child's growth.", "", true)}
+        <div class="grid3 g-explore">${EXPLORE.map(([k, obj, sub], i) => {
           const isP = !!PRODUCTS[k], x = isP ? PRODUCTS[k] : PLATFORMS[k];
-          return `<a class="ext rv" ${isP ? `data-p="${k}" href="#/${k}"` : `data-x="${k}" href="${x.url}"`} style="--c:${x.c};--i:${i}">
-            <span class="pc-art">${art("ic-" + k, "", "ic3d")}</span><b>${x.name}</b><small>${TILE_SUB[k]}</small>${isP ? "" : `<span class="ex-out" aria-label="Opens its own website">${ic("ext")}</span>`}</a>`;
+          return c3({ attrs: isP ? `data-p="${k}" href="#/${k}"` : `data-x="${k}" href="${x.url}" aria-label="${x.name}, opens its own website"`, c: x.c, obj, title: x.name, sub, ext: !isP, i, cls: "c3-tile" }).replace('class="c3-obj"', 'class="c3-obj pc-art"');
         }).join("")}</div>
       </section>
 
-      <a class="nextact rv" href="#/learn/leap">
-        <span class="na-pic">${art("rocket")}</span>
-        <span class="na-t"><small>Your next LEAP activity</small><b>Find a problem worth solving</b><span>Continue Module 4 · Picking the best problem</span></span>
-        <span class="na-p">${bar(62, "#22C55E")}<em>62%</em></span>
-        <span class="btn btn-navy">Continue ${ic("arrow")}</span>
+      <a class="na2 rv" href="#/learn/leap">${deco()}
+        <span class="na2-pic">${art("x-rocket")}</span>
+        <span class="na2-t"><small>Your next LEAP activity <i class="rays" aria-hidden="true"></i></small><b>Find a problem worth solving</b><span>Continue Module 4 · Picking the best problem</span></span>
+        <span class="na2-art" aria-hidden="true">${art("x-bulbbooks")}</span>
+        <span class="na2-p"><span class="bar3"><span style="--w:62%"></span></span><em>62%</em></span>
+        <span class="btn btn-sun">Continue ${ic("arrow")}</span>
       </a>
 
-      <section class="mysk rv" aria-labelledby="my-h">
-        <div class="mysk-h"><h2 id="my-h">My Skilido</h2><p>Pick up where you left off, ${DEMO.name}!</p><span class="grade">${ic("cap")}${DEMO.child} · Grade 5</span></div>
-        <div class="mysk-grid">
-          ${[["book", "#0A84FF", "Continue learning", "Story 6 · The Clever Crow", "#/learn/stories"], ["checkbox", "#F26B1D", "My activities", left ? `${left} task${left > 1 ? "s" : ""} to complete` : "All done this week", "#/learn/overview"], ["chart", "#16A34A", "My progress", "See how you're growing", "#/passport"], ["cal", "#7C3AED", "My events", "What's coming up", "#/ayati/live"]]
-            .map(([i, c, t, s, href], n) => `<a class="mys" href="${href}" style="--c:${c};--i:${n}"><span class="mys-ic">${ic(i)}</span><b>${t}</b><small>${s}</small></a>`).join("")}
+      <section class="sec3" aria-labelledby="my-h">
+        ${secHead("my-h", "My Skilido", `Pick up where you left off, ${DEMO.name}!`, `<span class="grade">${ic("cap")}${DEMO.child} · Grade 5</span>`)}
+        <div class="grid3 g-my">
+          ${[["x-mybook", "#0A84FF", "Continue learning", "Story 6 · The Clever Crow", "#/learn/stories"], ["x-myclip", "#F26B1D", "My activities", left ? `${left} task${left > 1 ? "s" : ""} to complete` : "All done this week", "#/learn/overview"], ["x-mychart", "#16A34A", "My progress", "See how you're growing", "#/passport"], ["x-mycal", "#7C3AED", "My events", "What's coming up", "#/ayati/live"]]
+            .map(([obj, c, t, sub, href], i) => c3({ attrs: `href="${href}"`, c, obj, title: t, sub, i, cls: "c3-wide" })).join("")}
         </div>
       </section>
 
-      <section class="coming rv" aria-labelledby="up-h">
-        <div class="sec-h"><div><h2 id="up-h">Coming up</h2><p>Live sessions and events.</p></div></div>
+      <section class="sec3" aria-labelledby="up-h">
+        ${secHead("up-h", "Coming up", "Live sessions and events.")}
         <div class="ulist2">
-          <a class="urow2" href="#/ayati/live" style="--c:#7C3AED">${gi("mic", "#7C3AED", "gi-sm")}<span><b>Raising confident speakers at home</b><small>Ayati Academy · live course</small></span><span class="when">Today · 7:00 PM</span></a>
-          <a class="urow2" href="#/learn/overview" style="--c:#0A84FF">${gi("rocket", "#F26B1D", "gi-sm")}<span><b>LEAP class · Picking the best problem</b><small>Learn · with Ms. Priya</small></span><span class="when">Tuesday</span></a>
-          <a class="urow2" href="${PLATFORMS.spotlight.url}" data-x="spotlight" style="--c:#C026D3">${gi("cal", "#C026D3", "gi-sm")}<span><b>Spotlight 2027 school registrations</b><small>Opens spotlight.skilido.com</small></span><span class="when">Open now</span></a>
+          <a class="urow2 rv" href="#/ayati/live" style="--c:#7C3AED">${gi("mic", "#7C3AED", "gi-sm")}<span><b>Raising confident speakers at home</b><small>Ayati Academy · live course</small></span><span class="when">Today · 7:00 PM</span></a>
+          <a class="urow2 rv" href="#/learn/overview" style="--c:#0A84FF;--i:1">${gi("rocket", "#F26B1D", "gi-sm")}<span><b>LEAP class · Picking the best problem</b><small>Learn · with Ms. Priya</small></span><span class="when">Tuesday</span></a>
+          <a class="urow2 rv" href="${PLATFORMS.spotlight.url}" data-x="spotlight" style="--c:#C026D3;--i:2">${gi("cal", "#C026D3", "gi-sm")}<span><b>Spotlight 2027 school registrations</b><small>Opens spotlight.skilido.com</small></span><span class="when">Open now</span></a>
         </div>
       </section>
       <p class="foot">© 2026 ADK Education Park Private Limited · <a href="https://skilido.com/privacy">Privacy</a> · <a href="https://skilido.com/terms">Terms</a> · <a href="mailto:support@skilido.com">Help</a></p>
     </div>`;
   }
   function bindHome() {
-    $$(".ext, .mys, .nextact").forEach((t) => t.addEventListener("pointermove", (e) => { const r = t.getBoundingClientRect(); t.style.setProperty("--mx", `${e.clientX - r.left}px`); t.style.setProperty("--my", `${e.clientY - r.top}px`); }));
-    const h = $(".hx");
-    if (h && matchMedia("(hover: hover) and (pointer: fine)").matches && !reduce.matches) {
-      h.addEventListener("pointermove", (e) => { const r = h.getBoundingClientRect(); h.style.setProperty("--px", ((e.clientX - r.left) / r.width - .5).toFixed(3)); h.style.setProperty("--py", ((e.clientY - r.top) / r.height - .5).toFixed(3)); });
-      h.addEventListener("pointerleave", () => { h.style.setProperty("--px", 0); h.style.setProperty("--py", 0); });
-    }
+    $$(".c3, .na2").forEach((t) => t.addEventListener("pointermove", (e) => { const r = t.getBoundingClientRect(); t.style.setProperty("--mx", `${e.clientX - r.left}px`); t.style.setProperty("--my", `${e.clientY - r.top}px`); }));
   }
+
+  // illustrated banner for every inner tab: title on the left, a floating 3D object on the right
+  const BANNER_ART = { "LEAP": "x-fly", "Home tasks": "x-qhouse", "My skills": "x-mychart", "Evidence": "x-qvideo", "Growth journey": "x-schart", "Recommendations": "x-lifelab",
+    "Badges": "t-stickers", "Courses": "x-capbook", "Modules": "x-books", "Live": "x-mic", "Certificates": "x-qshield", "Open challenges": "x-lifelab", "Post a challenge": "x-clip2" };
+  const banner = (icon, title, sub) => `<section class="pbx3 rv">${deco()}<div class="pbx3-t"><h1 tabindex="-1">${title}</h1>${sub ? `<p>${sub}</p>` : ""}</div><span class="pbx3-art float" aria-hidden="true">${BANNER_ART[title] ? art(BANNER_ART[title]) : gi(icon, null, "gi-lg")}</span></section>`;
 
   /* ================= PRODUCT PORTALS (inside Skilido) ================= */
   function productHTML(k, tab) {
@@ -373,13 +393,46 @@
     nav.scrollTo({ left: a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2, behavior: anim && !reduce.matches ? "smooth" : "auto" });
   }
   addEventListener("resize", () => cur.view === "product" && setTabs(cur.tab, false));
-  const paneHTML = (k, tab) => ({ learn: learnPane, ayati: ayatiPane, passport: passportPane, lifelab: lifelabPane })[k](tab);
+  const paneHTML = (k, tab) => ({ learn: learnPane, ayati: ayatiPane, passport: passportPane, lifelab: lifelabPane })[k](tab) + (EXTRA[`${k}/${tab}`] ? EXTRA[`${k}/${tab}`]() : "");
+  // a row of illustrated "how it works" / "next up" cards
+  const how3 = (id, title, sub, items) => `<section class="sec3">${secHead(id, title, sub)}<div class="grid3 g-how">${items.map(([obj, t, d, c = "#7C3AED", href], i) =>
+    `<${href ? `a href="${href}"${href.startsWith("http") ? ` data-x="${Object.keys(PLATFORMS).find((k) => PLATFORMS[k].url === href)}"` : ""}` : "div"} class="how3 rv" style="--c:${c};--i:${i}"><span class="how3-obj">${art(obj)}</span><span class="how3-n">${i + 1}</span><b>${t}</b><p>${d}</p></${href ? "a" : "div"}>`).join("")}</div></section>`;
+  // extra sections for the inner tabs, so none of them opens half-empty
+  const EXTRA = {
+    "passport/skills": () => how3("pr-h", "Where to practise each skill", "Every skill has a place to grow inside Skilido.", [
+      ["x-qbook", "Communication", "Stories and speaking cards in 3L.", "#0A84FF", "#/learn/stories"],
+      ["x-mic", "Confidence", "Perform on the Spotlight stage.", "#F26B1D", PLATFORMS.spotlight.url],
+      ["x-lifelab", "Critical Thinking", "LEAP lessons: picking the best problem.", "#EAB308", "#/learn/leap"],
+      ["x-qshield", "Problem-Solving", "LifeLab challenges with real teams.", "#16A34A", "#/lifelab/challenges"]]),
+    "passport/timeline": () => {
+      const v = 2, pp = 1, la = 1;
+      return `<section class="stats3 rv">${[["x-qshield", v, "Verified by teachers"], ["t-stickers", pp, "Participation records"], ["x-myclip", la, "Learning activity"]].map(([obj, n, l], i) => `<div style="--i:${i}"><span class="st3-obj">${art(obj)}</span><span><b>${n}</b><small>${l}</small></span></div>`).join("")}</section>
+      <p class="fine">${ic("shield")}Only verified evidence moves a skill level. Participation and learning activity are shown for the full picture.</p>`;
+    },
+    "passport/recs": () => how3("why-h", "Practise at home this week", "Ten-minute ideas that build the same skills.", [
+      ["x-masks", "Act it out", "Play the Crow's lines together and swap roles.", "#C026D3", "#/learn/home"],
+      ["x-mic", "One-minute talk", "Aarav explains his water-saving idea at dinner.", "#0A84FF", "#/learn/home"],
+      ["x-books", "Story order", "Shuffle the sequencing cards and rebuild the story.", "#7C3AED", "#/learn/stories"]]),
+    "passport/badges": () => `<section class="sec3">${secHead("nx-h", "Next badges to earn", "Each one needs teacher-verified evidence.")}
+      <div class="grid3 g-next">${[["x-fly", "First Venture", "Sell your LEAP product on Sales Day.", 62, "#F26B1D", "#/learn/leap"], ["x-qshield", "Team Player", "Finish a LifeLab challenge with your team.", 75, "#16A34A", "#/lifelab/challenges"], ["x-headph", "Great Listener", "Retell three stories in your own words.", 40, "#7C3AED", "#/learn/stories"]]
+        .map(([obj, t, d, pc, c, href], i) => `<a class="nxb rv" href="${href}" style="--c:${c};--i:${i}"><span class="nxb-obj">${art(obj)}</span><span class="nxb-t"><b>${t}</b><small>${d}</small><span class="prow-bar"><span class="bar3"><span style="--w:${pc}%"></span></span><em>${pc}%</em></span></span></a>`).join("")}</div></section>
+      ${how3("hb-h", "How badges work", "", [["x-qvideo", "Show it", "Aarav does the activity in class, at home or on stage."], ["x-myclip", "Check it", "A teacher or Skill Champion checks it against the rubric."], ["t-stickers", "Earn it", "The badge appears here and on his Skill Passport."]])}`,
+    "ayati/programs": () => {
+      const dn = PROGRAMS.reduce((a, x) => a + x[3], 0), n = PROGRAMS.reduce((a, x) => a + x[4], 0);
+      return `<section class="stats3 rv">${[["x-books", `${dn}/${n}`, "Modules completed"], ["x-qshield", "1", "Certificate earned"], ["x-mic", "2", "Live sessions this week"]].map(([obj, v, l], i) => `<div style="--i:${i}"><span class="st3-obj">${art(obj)}</span><span><b>${v}</b><small>${l}</small></span></div>`).join("")}</section>`;
+    },
+    "ayati/live": () => how3("hl-h", "How live sessions work", "Join from inside Skilido, nothing to install.", [["x-myclip", "Register", "Tap Remind me or Register on any session."], ["x-mycal", "Get a reminder", "Skilido notifies you 30 minutes before."], ["x-qvideo", "Join live", "The join link opens here at start time."]]),
+    "ayati/certificates": () => how3("hc-h", "Every certificate can be verified", "Schools and employers check it with one link.", [["x-capbook", "Complete the course", "Finish every module and the practice task."], ["x-qshield", "Get verified", "An Ayati assessor reviews your final task."], ["x-folder", "Share it", "Download the PDF or share the verification link."]]),
+    "lifelab/challenges": () => EXTRA["lifelab/open"](),
+    "lifelab/open": () => how3("hw-h", "How a challenge works", "Four steps, about two weeks, one real result.", [["x-headph", "Understand", "Talk to the people who have the problem.", "#0EA5E9"], ["x-lifelab", "Ideate", "Sketch ideas as a team and pick one.", "#F59E0B"], ["x-qhouse", "Build", "Make a simple prototype and test it.", "#16A34A"], ["x-mic", "Present", "Show the result and earn verified evidence.", "#7C3AED"]]),
+    "lifelab/post": () => how3("gc-h", "What makes a good challenge", "Reviewers look for these three things.", [["x-qhouse", "Real and local", "A problem children can see at school, at home or nearby.", "#16A34A"], ["x-qshield", "Safe to solve", "No risk, no money, and an adult nearby.", "#F59E0B"], ["x-schart", "Clear success", "A result you can measure in two to three weeks.", "#0A84FF"]]),
+  };
 
   /* ---------- shared building blocks ---------- */
   // glossy icon tile, the signature element of the portal design
   // artwork cut from the Skilido design references (assets/art)
-  const art = (name, alt = "", cls = "") => `<img class="art ${cls}" src="assets/art/${name}.webp?v=3" alt="${alt}" decoding="async">`;
-  const deco = () => `<span class="deco" aria-hidden="true"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i><i class="c5"></i><i class="st s-a">${ic("sparkle")}</i><i class="st s-b">${ic("star")}</i></span>`;
+  const art = (name, alt = "", cls = "") => `<img class="art ${cls}" src="assets/art/${name}.webp?v=4" alt="${alt}" decoding="async">`;
+  const deco = () => `<span class="deco" aria-hidden="true"><i class="d1"></i><i class="d2"></i><i class="d3"></i><i class="d4"></i><i class="d5"></i><i class="st s-a">${ic("sparkle")}</i><i class="st s-b">${ic("star")}</i></span>`;
   const gi = (icon, c, size = "") => `<span class="gi ${size}"${c ? ` style="--c:${c}"` : ""}>${ic(icon)}</span>`;
   const swoosh = (word) => `<span class="sw">${word}<svg viewBox="0 0 220 22" preserveAspectRatio="none" aria-hidden="true"><path d="M4 15 C 60 4, 150 3, 216 12"/></svg></span>`;
   const ring = (pct, c, cls = "") => `<div class="ring ${cls}" style="--c:${c};--to:${pct}" role="img" aria-label="${pct} percent"><div><b data-count="${pct}">0</b><small>%</small></div></div>`;
@@ -392,67 +445,73 @@
       <div class="phx-copy"><h1 tabindex="-1">${title}</h1><p>${sub}</p>${ctas ? `<div class="ctas">${ctas}</div>` : ""}</div>
       <div class="phx-art" aria-hidden="true">${art}<i class="ray r1"></i><i class="ray r2"></i><i class="ray r3"></i></div>
     </section>`;
-  // compact banner for the other tabs
-  const banner = (icon, title, sub) => `<section class="pbx rv">${gi(icon, null, "gi-lg")}<div><h1 tabindex="-1">${title}</h1>${sub ? `<p>${sub}</p>` : ""}</div></section>`;
 
   /* ================= LEARN ================= */
   const TODOS = [["t1", "rocket", "#F26B1D", "Picking the best problem", "LEAP lesson", "Due Fri"], ["t2", "mask", "#C026D3", "Rehearse the Crow's lines", "3L · with family", "Due Sat"], ["t3", "mic", "#0A84FF", "Neighbourhood interview", "Home task", "Due Sun"]];
   function learnPane(tab) {
     if (tab === "overview") {
-      const tiles = [["book", "#0A84FF", "Learn", "Watch · read · understand", "#/learn/stories"], ["target", "#F26B1D", "Practise", "Try activities, build skills", "#/learn/leap"],
-        ["checkbox", "#16A34A", "Assessment", "Show what you've learned", "#/passport/skills"], ["video", "#7C3AED", "Join class", "Live and virtual sessions", "scroll:classes"], ["home", "#E11D74", "Home tasks", "Do them together", "#/learn/home"]];
+      const tiles = [["x-qbook", "#0A84FF", "Learn", "Watch · read · understand", "#/learn/stories"], ["x-qchart", "#16A34A", "Practise", "Try activities, build skills", "#/learn/leap"],
+        ["x-qshield", "#F59E0B", "Assessment", "Show what you've learned", "#/passport/skills"], ["x-qvideo", "#7C3AED", "Join class", "Live and virtual sessions", "scroll:classes"], ["x-qhouse", "#E11D74", "Home tasks", "Do them together", "#/learn/home"]];
       return hero(`Learn. Practise. ${swoosh("Prove.")}`, `${DEMO.child}'s 3L and LEAP learning space.`,
-        `<span class="hero-pic float">${art("learn-hero")}</span>`,
-        `<a class="btn btn-sun" href="#/learn/leap">Continue LEAP ${ic("arrow")}</a><a class="tlink tlink-lg" href="#/learn/stories">Open Story 6 ${ic("chev")}</a>`) + `
-      <nav class="qtiles" aria-label="Learning shortcuts">${tiles.map(([i, c, t, s, href], n) => href.startsWith("scroll:")
-        ? `<button class="qt rv" data-scroll="${href.slice(7)}" style="--c:${c};--i:${n}"><span class="qi">${ic(i)}</span><b>${t}</b><small>${s}</small></button>`
-        : `<a class="qt rv" href="${href}" style="--c:${c};--i:${n}"><span class="qi">${ic(i)}</span><b>${t}</b><small>${s}</small></a>`).join("")}</nav>
+        `<span class="hero-pic hero-scene">${art("s-learn", "A smiling student with a rocket and books")}</span>`,
+        `<a class="btn btn-sun" href="#/learn/leap">Continue LEAP ${ic("arrow")}</a><a class="btn btn-glass" href="#/learn/stories">Open Story 6 ${ic("chev")}</a>`) + `
+      <nav class="grid3 g-quick" aria-label="Learning shortcuts">${tiles.map(([obj, c, t, sub, href], i) => href.startsWith("scroll:")
+        ? c3({ tag: "button", attrs: `type="button" data-scroll="${href.slice(7)}"`, c, obj, title: t, sub, i, cls: "c3-tile" })
+        : c3({ attrs: `href="${href}"`, c, obj, title: t, sub, i, cls: "c3-tile" })).join("")}</nav>
 
       <div class="duo">
         <section class="panel rv" aria-labelledby="cp-h">
           <h2 id="cp-h" class="panel-h">My current programmes</h2>
-          <a class="prow" href="#/learn/leap" style="--c:#F26B1D"><span class="thumb-cut">${art("rocket")}</span><span class="prow-t"><b>LEAP · Young Founders</b><small>Module 4: Find a problem worth solving</small><span class="prow-bar">${bar(62, "#22C55E")}<em>62%</em></span></span><span class="go">${ic("arrow")}</span></a>
-          <a class="prow" href="#/learn/stories" style="--c:#C026D3">${gi("mask", "#C026D3", "gi-thumb")}<span class="prow-t"><b>3L Dramatics · Season 2</b><small>Story 6: The Clever Crow</small><span class="prow-bar">${bar(40, "#22C55E")}<em>40%</em></span></span><span class="go">${ic("arrow")}</span></a>
+          <a class="prow" href="#/learn/leap" style="--c:#F26B1D"><span class="thumb-cut">${art("x-rocket")}</span><span class="prow-t"><b>LEAP · Young Founders</b><small>Module 4: Find a problem worth solving</small><span class="prow-bar"><span class="bar3"><span style="--w:62%"></span></span><em>62%</em></span></span><span class="go3">${ic("arrow")}</span></a>
+          <a class="prow" href="#/learn/stories" style="--c:#C026D3"><span class="thumb-cut">${art("x-masks")}</span><span class="prow-t"><b>3L Dramatics · Season 2</b><small>Story 6: The Clever Crow</small><span class="prow-bar"><span class="bar3"><span style="--w:40%"></span></span><em>40%</em></span></span><span class="go3">${ic("arrow")}</span></a>
         </section>
         <section class="panel rv" aria-labelledby="td-h">
           <h2 id="td-h" class="panel-h">To do next <span class="count" id="todo-count"></span></h2>
-          <ul class="todos">${TODOS.map(([id, i, c, t, s, due], n) => `<li class="todo ${done.has(id) ? "is-done" : ""}" style="--c:${c};--i:${n}">
+          <ul class="todos">${TODOS.map(([id, i, c, t, sub, due], n) => `<li class="todo ${done.has(id) ? "is-done" : ""}" style="--c:${c};--i:${n}">
             <button class="tick" data-todo="${id}" aria-pressed="${done.has(id)}" aria-label="Mark “${t}” done"><span class="tk-i">${ic(i)}</span>${ic("check", "ic tk-c")}</button>
-            <span class="todo-t"><b>${t}</b><small>${s}</small></span><span class="due">${due}</span></li>`).join("")}</ul>
+            <span class="todo-t"><b>${t}</b><small>${sub}</small></span><span class="due">${due}</span></li>`).join("")}</ul>
         </section>
       </div>
 
-      <section class="panel rv" id="classes" aria-labelledby="uc-h">
-        <div class="panel-row"><h2 id="uc-h" class="panel-h">Upcoming classes</h2><a class="tlink" href="#/learn/leap">See LEAP ${ic("chev")}</a></div>
+      <section class="panel panel3 rv" id="classes" aria-labelledby="uc-h">${deco()}
+        ${secHead("uc-h", "Upcoming classes", "Live and curated sessions for real-world learning.", `<a class="tlink" href="#/learn/leap">See LEAP ${ic("chev")}</a>`)}
         <div class="classes">
-          <div class="cls" style="--c:#0A84FF;--d:#0040A8"><span class="cls-art cls-photo">${art("teacher", "Ms. Priya, LEAP teacher")}<span class="badge-live"><i></i>Next</span></span>
+          <div class="cls3" style="--c:#0A84FF"><span class="cls3-pic">${art("teacher", "Ms. Priya, LEAP teacher")}<span class="badge-live"><i></i>Next</span></span>
             <span class="cls-t"><b>LEAP class</b><span>Picking the best problem</span><small>${ic("cal")}Tuesday · with Ms. Priya</small></span>
             <button class="btn btn-acc btn-sm" data-join>${ic("play")}<span>Remind me</span></button></div>
-          <div class="cls" style="--c:#C026D3;--d:#6B0F78"><span class="cls-art"><span class="badge-live"><i></i>Stage</span>${gi("mask", "#C026D3", "gi-md")}</span>
+          <div class="cls3" style="--c:#C026D3"><span class="cls3-pic cls3-obj">${art("x-trophy", "3L performance day")}</span>
             <span class="cls-t"><b>3L performance day</b><span>The Clever Crow</span><small>${ic("cal")}Saturday · at school</small></span>
             <button class="btn btn-acc btn-sm" data-join>${ic("play")}<span>Remind me</span></button></div>
         </div>
       </section>
 
-      <section class="stats rv">${[["16", "Original story episodes"], ["192", "Structured sessions"], ["32", "Planned performances"]].map(([n, l]) => `<div><b data-count="${n}">0</b><span>${l}</span></div>`).join("")}</section>
-      <section class="sec">${head("Three Ls. One confident child.", "Each story is built to grow all three, together.")}
-        <div class="bento3">${[["msg", "Language", "New words, narration and the courage to speak up in front of others.", "#0A84FF"], ["grid", "Logic", "Story order, cause and effect, and solving the problem inside every tale.", "#7C3AED"], ["heart", "Life skills", "Honesty, teamwork and empathy, learned by becoming the characters.", "#F04E23"]]
-          .map(([i, t, d, c], n) => `<div class="b3 rv" style="--c:${c};--i:${n}">${gi(i, c)}<b>${t}</b><p>${d}</p></div>`).join("")}</div></section>
-      <section class="sec">${head("From story, to stage, to self.", "Every 12-session cycle follows the same five steps.")}
-        <ol class="steps5">${[["Listen", "to a story"], ["Understand", "words, order and reasons"], ["Become", "a character on stage"], ["Speak", "alone, as yourself"], ["Reflect", "on how you grew"]].map(([t, d], i) => `<li class="rv ${i < 2 ? "ok" : i === 2 ? "now" : ""}" style="--i:${i}"><span class="s5-n">${i < 2 ? ic("check") : i + 1}</span><b>${t}</b><span>${d}</span></li>`).join("")}</ol></section>
-      <section class="sec">${head("Everything in the StoryBox.", "Ten hands-on tools for school and home.")}
-        <div class="tools">${[["book", "Storybooks", "#0A84FF"], ["layers", "Story sequencing cards", "#7C3AED"], ["dice", "Story dice", "#F26B1D"], ["msg", "Words of the day", "#16A34A"], ["mic", "My speaking cards", "#C026D3"], ["users", "Finger puppets", "#E11D74"], ["mask", "Little stage mat", "#F59E0B"], ["idcard", "3L Journey Book", "#0EA5E9"], ["heart", "Family challenge cards", "#EF4444"], ["star", "Achievement stickers", "#EAB308"]]
-          .map(([i, t, c], n) => `<div class="tool rv" style="--i:${n}">${gi(i, c, "gi-sm")}<b>${t}</b></div>`).join("")}</div></section>
-      <section class="band rv"><div><h2>Rehearse together tonight.</h2><p>Play the Crow's lines with ${DEMO.child} for ten minutes and record his practice.</p></div><a class="btn btn-white" href="#/learn/home">See home tasks ${ic("arrow")}</a></section>`;
+      <section class="stats3 rv">${[["x-sbook", "16", "Original story episodes"], ["x-schart", "192", "Structured sessions"], ["x-scal", "32", "Planned performances"]].map(([obj, n, l], i) => `<div style="--i:${i}"><span class="st3-obj">${art(obj)}</span><span><b data-count="${n}">0</b><small>${l}</small></span></div>`).join("")}</section>
+
+      <section class="sec3">${secHead("tl-h", `Three Ls. One confident ${swoosh("child.")}`, "Each story is built to grow all three, together.")}
+        <div class="grid3 g-three">${[["msg", "Language", "New words, narration and the courage to speak up in front of others.", "#0A84FF", "#/learn/stories"], ["grid", "Logic", "Story order, cause and effect, and solving the problem inside every tale.", "#7C3AED", "#/learn/leap"], ["heart", "Life skills", "Honesty, teamwork and empathy, learned by becoming the characters.", "#F04E23", "#/learn/home"]]
+          .map(([i, t, d, c, href], n) => `<a class="l3 rv" href="${href}" style="--c:${c};--i:${n}">${gi(i, c, "gi-md")}<span><b>${t}</b><p>${d}</p></span><span class="go3" aria-hidden="true">${ic("arrow")}</span></a>`).join("")}</div></section>`;
     }
-    if (tab === "stories") return banner("mask", "Stories", "Season 2 · Language, Logic and Life skills") + `
+    if (tab === "stories") {
+      const steps = [["x-headph", "Listen", "to a story", "ok"], ["x-books", "Understand", "words, order and reasons", "ok"], ["x-masks", "Become", "a character on stage", "now"], ["x-mic", "Speak", "alone, as yourself", ""], ["x-clip2", "Reflect", "on how you grew", ""]];
+      const tools = [["t-books", "Storybooks"], ["t-seq", "Story sequencing cards"], ["t-dice", "Story dice"], ["t-words", "Words of the day"], ["t-speak", "My speaking cards"], ["t-puppets", "Finger puppets"], ["t-stage", "Little stage mat"], ["t-journey", "3L Journey Book"], ["t-family", "Family challenge cards"], ["t-stickers", "Achievement stickers"]];
+      return hero(`Learn with ${swoosh("Stories.")}`, "A step-by-step learning journey that builds language, confidence and life skills.",
+        `<span class="hero-pic hero-scene">${art("s-stories", "The StoryBox and LEAP kits beside a smiling student")}</span>`) + `
+      <ol class="grid3 g-steps" aria-label="Every 12-session cycle">${steps.map(([obj, t, d, st], i) => `<li class="step3 rv ${st}" style="--i:${i}"><span class="s3-n">${st === "ok" ? ic("check") : i + 1}</span><span class="s3-t"><b>${t}</b><small>${d}</small></span><span class="s3-obj">${art(obj)}</span></li>`).join("")}</ol>
+
       <div class="card feature rv">
         <button class="video" data-toast="Video playback arrives when Learn launches."><span class="vplay">${ic("play")}</span><span class="vcap">The Clever Crow · rehearsal · 2:14</span></button>
         <div class="fr-b"><span class="tag tag-now">Now</span><b>Story 6 · The Clever Crow</b><p>A thirsty crow finds a clever way to reach the water. Aarav plays the Crow and practises the narrator's lines.</p>
           <div class="fr-row"><span>${ic("cal")}Performance Saturday</span><span>${ic("clock")}12 sessions</span></div></div>
       </div>
+
+      <section class="sec3">${secHead("sb-h", "Everything in the StoryBox.", "Ten hands-on tools for school and home.", "", true)}
+        <div class="grid3 g-tools">${tools.map(([obj, t], i) => `<button type="button" class="tool3 rv" style="--i:${i}" data-toast="${t}: part of the 3L StoryBox, used in class and at home."><span class="tool3-obj">${art(obj)}</span><b>${t}</b><span class="go3" aria-hidden="true">${ic("arrow")}</span></button>`).join("")}</div></section>
+
       ${head("Season 2", "16 original episodes")}
-      ${rows([["done", "1 · The Mango Tree Gang", "Performed"], ["done", "2 · The Brave Little Ant", "Performed"], ["done", "3 · Sharing the Sun", "Performed"], ["done", "4 · The Lost Kite", "Performed"], ["done", "5 · The Honest Woodcutter", "Performed · video reviewed"], ["now", "6 · The Clever Crow", "Rehearsing", "Now"], ["lock", "7 · The Lion and the Mouse", "Unlocks after Story 6"], ["lock", "8 · The Talking Drum", "Coming up"]], "#0A84FF")}`;
+      ${rows([["done", "1 · The Mango Tree Gang", "Performed"], ["done", "2 · The Brave Little Ant", "Performed"], ["done", "3 · Sharing the Sun", "Performed"], ["done", "4 · The Lost Kite", "Performed"], ["done", "5 · The Honest Woodcutter", "Performed · video reviewed"], ["now", "6 · The Clever Crow", "Rehearsing", "Now"], ["lock", "7 · The Lion and the Mouse", "Unlocks after Story 6"], ["lock", "8 · The Talking Drum", "Coming up"]], "#0A84FF")}
+
+      <section class="band3 rv">${deco()}<span class="band3-obj">${art("x-clapper")}</span><div><h2>Rehearse together tonight. <i class="rays rays-w" aria-hidden="true"></i></h2><p>Play the Crow's lines with ${DEMO.child} for ten minutes and record his practice.</p></div><a class="btn btn-white" href="#/learn/home">See home tasks ${ic("arrow")}</a></section>`;
+    }
     if (tab === "leap") return banner("rocket", "LEAP", "Leadership, Entrepreneurship and Achievement · Grades 3 to 10") + `
       <div class="card prog rv">${ring(62, "#0A84FF")}<div><span class="tag">Module 4</span><b class="pt">Find a problem worth solving</b><small>5 of 8 lessons · next class Tuesday</small></div></div>
       ${head("The venture journey", "One real venture every year")}
@@ -463,8 +522,10 @@
     const acts = [["a1", "Rehearse together", "Play the Crow's lines with Aarav for 10 minutes. Record and upload his practice.", "15 min", "mask", "#C026D3"],
       ["a2", "Neighbourhood interview", "Ask Aarav: “What's one thing that annoys people in our street?” Let him interview one neighbour.", "20 min", "mic", "#0A84FF"],
       ["a3", "Words of the day", "Use today's three words at dinner: thirsty, clever, pebble.", "5 min", "msg", "#16A34A"]];
+    const doneActs = acts.filter(([id]) => done.has(id)).length;
     return banner("home", "Home tasks", "Small things you can do together this week") +
-      `<div class="acts">${acts.map(([id, t, d, m, i, c], n) => `<div class="act rv ${done.has(id) ? "is-done" : ""}" style="--i:${n};--c:${c}">${gi(i, c)}<div class="act-t"><b>${t}</b><p>${d}</p><small>${ic("clock")}${m}</small></div><button class="act-btn" data-act="${id}" aria-pressed="${done.has(id)}">${ic("check")}<span>${done.has(id) ? "Done" : "Mark done"}</span></button></div>`).join("")}</div>
+      `<div class="card wk3 rv"><span class="wk3-obj">${art("x-myclip")}</span><span class="wk3-t"><b><span id="wk-n">${doneActs}</span> of ${acts.length} done this week</b><small>About 40 minutes in total. Finished tasks show in the Skill Passport as learning activity.</small><span class="bar3"><span id="wk-bar" style="--w:${Math.round(doneActs / acts.length * 100)}%"></span></span></span></div>
+      <div class="acts">${acts.map(([id, t, d, m, i, c], n) => `<div class="act rv ${done.has(id) ? "is-done" : ""}" style="--i:${n};--c:${c}">${gi(i, c)}<div class="act-t"><b>${t}</b><p>${d}</p><small>${ic("clock")}${m}</small></div><button class="act-btn" data-act="${id}" aria-pressed="${done.has(id)}">${ic("check")}<span>${done.has(id) ? "Done" : "Mark done"}</span></button></div>`).join("")}</div>
       <p class="fine">${ic("sparkle")}Home tasks show in the Skill Passport as learning activity, never as a skill score.</p>`;
   }
 
@@ -590,18 +651,18 @@
         <div class="vids">${vids.map(([i, c, title, meta, dur], n) => `<button class="vid rv" style="--c:${c};--i:${n}" data-toast="Videos play inside Ayati Academy when it launches."><span class="vid-art${VIDART[title] ? " vid-photo" : ""}">${VIDART[title] ? art(VIDART[title]) : gi(i, c, "gi-md")}<span class="vid-play">${ic("play")}</span><span class="dur">${dur}</span></span><b>${title}</b><small>${meta}</small></button>`).join("")}</div>
       </section>
       <section class="duo">
-        <div class="panel rv"><h2 class="panel-h">${gi("award", "#7C3AED", "gi-xs")}${t ? "Certification courses" : "Courses for you"}</h2><p class="muted">${t ? "Get certified. Build your expertise." : "Learn at your own pace."}</p>
+        <div class="panel panel3 has-art rv">${deco()}<span class="p3-art float" aria-hidden="true">${art("x-capbook")}</span><h2 class="panel-h">${gi("award", "#7C3AED", "gi-sm")}${t ? "Certification courses" : "Courses for you"}<i class="rays" aria-hidden="true"></i></h2><p class="muted">${t ? "Get certified. Build your expertise." : "Learn at your own pace."}</p>
           <div class="clist">${courses.map(([i, title, d, dn, n, c, tag]) => `<a class="crow" href="#/ayati/${tag === "Earned" ? "certificates" : "programs"}" style="--c:${c}">${COURSEART[title] ? `<span class="thumb-pic">${art(COURSEART[title])}</span>` : gi(i, c, "gi-thumb")}<span><b>${title}</b><small>${ic(tag === "Earned" ? "award" : "book")}${tag === "Earned" ? d : `${n} modules · ${tag}`}</small></span><span class="go">${ic("arrow")}</span></a>`).join("")}</div>
         </div>
-        <div class="panel rv"><h2 class="panel-h">${gi("folder", "#7C3AED", "gi-xs")}Resources</h2><p class="muted">Ready-to-use materials for classroom and home.</p>
+        <div class="panel panel3 has-art rv">${deco()}<span class="p3-art float f2" aria-hidden="true">${art("x-folder")}</span><h2 class="panel-h">${gi("folder", "#7C3AED", "gi-sm")}Resources<i class="rays" aria-hidden="true"></i></h2><p class="muted">Ready-to-use materials for classroom and home.</p>
           <div class="seg2" role="tablist"><span class="seg2-pill" aria-hidden="true"></span>${[["teachers", "For teachers"], ["parents", "For parents"]].map(([k, l]) => `<button role="tab" data-res="${k}" aria-selected="${resTab === k}">${l}</button>`).join("")}</div>
           <div class="res-grid" id="res-grid">${resTiles()}</div>
         </div>
       </section>
-      <section class="panel rv">${head(`${gi("cal", "#7C3AED", "gi-xs")}Virtual expert sessions`, "Live sessions with education and parenting experts.", `<a class="tlink" href="#/ayati/live">All sessions ${ic("chev")}</a>`)}
+      <section class="panel panel3 rv">${deco()}${head(`${gi("cal", "#7C3AED", "gi-sm")}Virtual expert sessions<i class="rays" aria-hidden="true"></i>`, "Live sessions with education and parenting experts.", `<a class="tlink" href="#/ayati/live">All sessions ${ic("chev")}</a>`)}
         <div class="xsess"><span class="xs-art xs-photo">${art("expert", "Session expert")}</span>
           <span class="xs-t"><span class="badge-live"><i></i>Live</span><b>${live[1]}</b><small>${live[2]}</small><small>${ic("cal")}${live[0]}</small></span>
-          <button class="btn btn-acc" data-register="${lid}" aria-pressed="${registered.has(lid)}">${registered.has(lid) ? `${ic("check")}Registered` : `Register now ${ic("arrow")}`}</button></div>
+          <span class="xs-obj" aria-hidden="true">${art("x-micbooks")}</span><button class="btn btn-acc" data-register="${lid}" aria-pressed="${registered.has(lid)}">${registered.has(lid) ? `${ic("check")}Registered` : `Register now ${ic("arrow")}`}</button></div>
       </section>`;
   }
   function resTiles() {
@@ -656,7 +717,7 @@
   /* ================= LIFELAB ================= */
   function lifelabPane(tab) {
     if (tab === "challenges") return hero(`Real problems. ${swoosh("Real impact.")}`, `${DEMO.child}'s challenges from school, family and community.`,
-        `<span class="art-main">${gi("bulb", "#F59E0B", "gi-hero")}</span>
+        `<span class="art-main art-obj">${art("x-lifelab", "")}</span>
          <span class="spark s1">${ic("sparkle")}</span><span class="spark s2">${ic("star")}</span>`) + `
       <div class="cgrid">
         <div class="chal rv" style="--a:#0EA5E9;--b:#2563EB"><div class="ban">${gi("drop", "#0EA5E9", "gi-md")}<span class="tag tag-w">In progress</span></div>
@@ -667,7 +728,7 @@
         <div class="chal rv" style="--a:#22C55E;--b:#15803D"><div class="ban">${gi("leaf", "#16A34A", "gi-md")}<span class="tag tag-w">Completed</span></div>
           <div class="chal-b"><b class="pt">Zero-waste lunchbox week</b><small>Family challenge · verified by a Skill Champion</small></div></div>
       </div>`;
-    if (tab === "open") return banner("search", "Open challenges", "Matched to grade and interests") + `<div class="cgrid">${[["traffic", "Safer school gate at pickup time", "Tirupati Ward 12 · Grades 6–9 · 2 weeks", "Community", "#F97316", "#DC2626"], ["library", "Get more kids into the library", "Accord School · Grades 3–6 · 3 weeks", "School", "#A855F7", "#6D28D9"]]
+    if (tab === "open") return banner("search", "Open challenges", "Matched to grade and interests") + `<div class="cgrid">${[["traffic", "Safer school gate at pickup time", "Tirupati Ward 12 · Grades 6–9 · 2 weeks", "Community", "#F97316", "#DC2626"], ["library", "Get more kids into the library", "Accord School · Grades 3–6 · 3 weeks", "School", "#A855F7", "#6D28D9"], ["leaf", "A plastic-free classroom week", "Family + school · Grades 3–8 · 1 week", "Family", "#22C55E", "#15803D"]]
       .map(([i, t, s, tag, a, b]) => `<div class="chal rv" style="--a:${a};--b:${b}"><div class="ban">${gi(i, a, "gi-md")}<span class="tag tag-w">${tag}</span></div><div class="chal-b"><b class="pt">${t}</b><small>${s}</small><button class="btn btn-acc btn-sm" data-toast="Aarav accepts in the student app, then joins a team.">Suggest to Aarav</button></div></div>`).join("")}</div>`;
     return banner("plus", "Post a challenge", "Children solve real problems and earn verified evidence.") + `
       <form class="card pform rv" id="pform" novalidate>
@@ -766,7 +827,8 @@
     if ("IntersectionObserver" in window && !reduce.matches) {
       if (!io) io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -6% 0px" });
       $$(".rv:not(.in)", scope).forEach((el) => io.observe(el));
-      setTimeout(() => $$(".rv:not(.in)", scope).forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < innerHeight) el.classList.add("in"); }), 1200);
+      const seen = () => $$(".rv:not(.in)", scope).forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) el.classList.add("in"); });
+      requestAnimationFrame(() => requestAnimationFrame(seen)); setTimeout(seen, 450);
     } else $$(".rv", scope).forEach((el) => el.classList.add("in"));
     // count up
     $$("[data-count]", scope).forEach((el) => {
@@ -782,6 +844,8 @@
       on ? done.add(id) : done.delete(id);
       b.setAttribute("aria-pressed", on); $("span", b).textContent = on ? "Done" : "Mark done";
       b.closest(".act").classList.toggle("is-done", on);
+      const all = $$("[data-act]", scope), n = all.filter((x) => done.has(x.dataset.act)).length, wn = $("#wk-n", scope), wb = $("#wk-bar", scope);
+      if (wn) wn.textContent = n; if (wb) wb.style.setProperty("--w", Math.round(n / all.length * 100) + "%");
       if (on) toast("Nice. It's added to Aarav's learning activity.");
     }));
     $$(".opt", scope).forEach((o) => o.addEventListener("click", () => $$(".opt", o.parentElement).forEach((x) => x.setAttribute("aria-pressed", x === o))));
