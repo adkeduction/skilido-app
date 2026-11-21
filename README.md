@@ -17,10 +17,10 @@ python3 -m http.server 4321
 ## Inside Skilido (designed demo pages, sample data)
 | Product | Routes |
 |---|---|
-| Learn · 3L learning ecosystem | `#/learn/overview`, `stories`, `leap`, `home` |
-| Ayati Academy · training and certification | `#/ayati/overview`, `programs`, `modules`, `live`, `certificates` |
+| Learn · 3L learning ecosystem | `#/learn/overview`, `stories`, `leap`, `assess` (quizzes, self-check, activities), `home` |
+| Ayati Academy · teacher training and certification (teachers only) | `#/ayati/overview`, `programs`, `modules`, `live`, `certificates` |
 | Skill Passport | `#/passport/overview`, `skills`, `timeline`, `journey`, `recs`, `badges` |
-| LifeLab | `#/lifelab/challenges`, `open`, `post` |
+| LifeLab | `#/lifelab/challenges` (stars, deadlines, submit), `open` (join), `post` |
 
 ## Platforms (open their own landing page directly, no role screens)
 | Platform | URL |

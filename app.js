@@ -21,7 +21,7 @@
   /* ================= products and platforms ================= */
   const PRODUCTS = {
     learn: { name: "Learn", sub: "The 3L learning ecosystem", icon: "book", c: "#0A84FF", d: "#0040A8", t: "#EAF4FF",
-      tabs: [["overview", "Overview", "grid"], ["stories", "Stories", "mask"], ["leap", "LEAP", "rocket"], ["home", "Home tasks", "home"]] },
+      tabs: [["overview", "Overview", "grid"], ["stories", "Stories", "mask"], ["leap", "LEAP", "rocket"], ["assess", "Assessments", "checkbox"], ["home", "Home tasks", "home"]] },
     ayati: { name: "Ayati Academy", sub: "Training and certification", icon: "cap", c: "#7C3AED", d: "#43108F", t: "#F3EDFF",
       tabs: [["overview", "Overview", "grid"], ["programs", "Courses", "award"], ["modules", "Modules", "book"], ["live", "Live", "video"], ["certificates", "Certificates", "idcard"]] },
     passport: { name: "Skill Passport", sub: "Verified growth for life", icon: "idcard", c: "#2563EB", d: "#1E3A8A", t: "#EAF1FF",
@@ -44,11 +44,11 @@
   const INDEX = [
     ["The Clever Crow", "Learn · 3L story 6", "#/learn/stories"], ["The 3L method", "Learn · Listen, Understand, Become, Speak, Reflect", "#/learn/overview"],
     ["StoryBox tools", "Learn · 10 hands-on tools", "#/learn/overview"], ["Picking the best problem", "Learn · LEAP lesson", "#/learn/leap"],
-    ["Rehearse together", "Learn · at home", "#/learn/home"], ["Skill Champion certification", "Ayati Academy · 3 of 5 modules", "#/ayati/overview"],
+    ["Rehearse together", "Learn · at home", "#/learn/home"], ["Self-assessment quizzes", "Learn · Assessments", "#/learn/assess"], ["Practice activities", "Learn · Assessments", "#/learn/assess"], ["Skill Champion certification", "Ayati Academy · 3 of 5 modules", "#/ayati/overview"],
     ["3L Facilitation", "Ayati Academy · track", "#/ayati/programs"], ["Assessing with the rubric", "Ayati Academy · module 4", "#/ayati/modules"],
-    ["Raising confident speakers", "Ayati Academy · live today 7 PM", "#/ayati/live"], ["Certificates", "Ayati Academy", "#/ayati/certificates"],
+    ["Coaching shy speakers in class", "Ayati Academy · teacher workshop, today 7 PM", "#/ayati/live"], ["Certificates", "Ayati Academy", "#/ayati/certificates"],
     ["Confidence", "Skill Passport · Level 4", "#/passport/skills"], ["Badges", "Skill Passport", "#/passport/badges"],
-    ["Save Water challenge", "LifeLab · step 3 of 4", "#/lifelab/challenges"], ["Post a challenge", "LifeLab", "#/lifelab/post"],
+    ["Save Water challenge", "LifeLab · submit by 28 Nov", "#/lifelab/challenges"], ["LifeLab stars", "LifeLab · stars earned", "#/lifelab/challenges"], ["Mini market for a cause", "LifeLab · open challenge", "#/lifelab/open"], ["Post a challenge", "LifeLab", "#/lifelab/post"],
     ["FLY", "Opens fly.skilido.com", "ext:fly"], ["FLY Bazaar", "Opens fly.skilido.com/bazaar", "ext:bazaar"],
     ["Spotlight", "Opens spotlight.skilido.com", "ext:spotlight"], ["Family Club", "Opens club.skilido.com", "ext:club"],
   ];
@@ -292,7 +292,7 @@
     ["fly", "x-fly", "A Venture Lab for curious young founders"],
     ["bazaar", "x-bazaar", "Kids' own creations and products"],
     ["spotlight", "x-mic", "A stage for every child's talent"],
-    ["ayati", "x-ayati", "Expert-led learning for educators & parents"],
+    ["ayati", "x-ayati", "Training and certification for teachers"],
     ["club", "t-puppets", "The Icons Family Club community"],
     ["lifelab", "x-lifelab", "Build life skills like confidence, empathy and teamwork"],
   ];
@@ -349,7 +349,7 @@
       <section class="sec3" aria-labelledby="up-h">
         ${secHead("up-h", "Coming up", "Live sessions and events.")}
         <div class="ulist2">
-          <a class="urow2 rv" href="#/ayati/live" style="--c:#7C3AED">${gi("mic", "#7C3AED", "gi-sm")}<span><b>Raising confident speakers at home</b><small>Ayati Academy · live course</small></span><span class="when">Today · 7:00 PM</span></a>
+          <a class="urow2 rv" href="#/ayati/live" style="--c:#7C3AED">${gi("mic", "#7C3AED", "gi-sm")}<span><b>Coaching shy speakers in class</b><small>Ayati Academy · teacher workshop</small></span><span class="when">Today · 7:00 PM</span></a>
           <a class="urow2 rv" href="#/learn/overview" style="--c:#0A84FF;--i:1">${gi("rocket", "#F26B1D", "gi-sm")}<span><b>LEAP class · Picking the best problem</b><small>Learn · with Ms. Priya</small></span><span class="when">Tuesday</span></a>
           <a class="urow2 rv" href="${PLATFORMS.spotlight.url}" data-x="spotlight" style="--c:#C026D3;--i:2">${gi("cal", "#C026D3", "gi-sm")}<span><b>Spotlight 2027 school registrations</b><small>Opens spotlight.skilido.com</small></span><span class="when">Open now</span></a>
         </div>
@@ -362,7 +362,7 @@
   }
 
   // illustrated banner for every inner tab: title on the left, a floating 3D object on the right
-  const BANNER_ART = { "LEAP": "x-fly", "Home tasks": "x-qhouse", "My skills": "x-mychart", "Evidence": "x-qvideo", "Growth journey": "x-schart", "Recommendations": "x-lifelab",
+  const BANNER_ART = { "Assessments": "x-qshield", "LEAP": "x-fly", "Home tasks": "x-qhouse", "My skills": "x-mychart", "Evidence": "x-qvideo", "Growth journey": "x-schart", "Recommendations": "x-lifelab",
     "Badges": "t-stickers", "Courses": "x-capbook", "Modules": "x-books", "Live": "x-mic", "Certificates": "x-qshield", "Open challenges": "x-lifelab", "Post a challenge": "x-clip2" };
   const banner = (icon, title, sub) => `<section class="pbx3 rv">${deco()}<div class="pbx3-t"><h1 tabindex="-1">${title}</h1>${sub ? `<p>${sub}</p>` : ""}</div><span class="pbx3-art float" aria-hidden="true">${BANNER_ART[title] ? art(BANNER_ART[title]) : gi(icon, null, "gi-lg")}</span></section>`;
 
@@ -419,7 +419,7 @@
       ${how3("hb-h", "How badges work", "", [["x-qvideo", "Show it", "Aarav does the activity in class, at home or on stage."], ["x-myclip", "Check it", "A teacher or Skill Champion checks it against the rubric."], ["t-stickers", "Earn it", "The badge appears here and on his Skill Passport."]])}`,
     "ayati/programs": () => {
       const dn = PROGRAMS.reduce((a, x) => a + x[3], 0), n = PROGRAMS.reduce((a, x) => a + x[4], 0);
-      return `<section class="stats3 rv">${[["x-books", `${dn}/${n}`, "Modules completed"], ["x-qshield", "1", "Certificate earned"], ["x-mic", "2", "Live sessions this week"]].map(([obj, v, l], i) => `<div style="--i:${i}"><span class="st3-obj">${art(obj)}</span><span><b>${v}</b><small>${l}</small></span></div>`).join("")}</section>`;
+      return `<section class="stats3 rv">${[["x-books", `${dn}/${n}`, "Modules completed"], ["x-qshield", String(PROGRAMS.length), "Certification tracks"], ["x-mic", "2", "Live sessions this week"]].map(([obj, v, l], i) => `<div style="--i:${i}"><span class="st3-obj">${art(obj)}</span><span><b>${v}</b><small>${l}</small></span></div>`).join("")}</section>`;
     },
     "ayati/live": () => how3("hl-h", "How live sessions work", "Join from inside Skilido, nothing to install.", [["x-myclip", "Register", "Tap Remind me or Register on any session."], ["x-mycal", "Get a reminder", "Skilido notifies you 30 minutes before."], ["x-qvideo", "Join live", "The join link opens here at start time."]]),
     "ayati/certificates": () => how3("hc-h", "Every certificate can be verified", "Schools and employers check it with one link.", [["x-capbook", "Complete the course", "Finish every module and the practice task."], ["x-qshield", "Get verified", "An Ayati assessor reviews your final task."], ["x-folder", "Share it", "Download the PDF or share the verification link."]]),
@@ -451,7 +451,7 @@
   function learnPane(tab) {
     if (tab === "overview") {
       const tiles = [["x-qbook", "#0A84FF", "Learn", "Watch · read · understand", "#/learn/stories"], ["x-qchart", "#16A34A", "Practise", "Try activities, build skills", "#/learn/leap"],
-        ["x-qshield", "#F59E0B", "Assessment", "Show what you've learned", "#/passport/skills"], ["x-qvideo", "#7C3AED", "Join class", "Live and virtual sessions", "scroll:classes"], ["x-qhouse", "#E11D74", "Home tasks", "Do them together", "#/learn/home"]];
+        ["x-qshield", "#F59E0B", "Assessment", "Quizzes and self-checks", "#/learn/assess"], ["x-qvideo", "#7C3AED", "Join class", "Live and virtual sessions", "scroll:classes"], ["x-qhouse", "#E11D74", "Home tasks", "Do them together", "#/learn/home"]];
       return hero(`Learn. Practise. ${swoosh("Prove.")}`, `${DEMO.child}'s 3L and LEAP learning space.`,
         `<span class="hero-pic hero-scene">${art("s-learn", "A smiling student with a rocket and books")}</span>`,
         `<a class="btn btn-sun" href="#/learn/leap">Continue LEAP ${ic("arrow")}</a><a class="btn btn-glass" href="#/learn/stories">Open Story 6 ${ic("chev")}</a>`) + `
@@ -512,6 +512,22 @@
 
       <section class="band3 rv">${deco()}<span class="band3-obj">${art("x-clapper")}</span><div><h2>Rehearse together tonight. <i class="rays rays-w" aria-hidden="true"></i></h2><p>Play the Crow's lines with ${DEMO.child} for ten minutes and record his practice.</p></div><a class="btn btn-white" href="#/learn/home">See home tasks ${ic("arrow")}</a></section>`;
     }
+    if (tab === "assess") {
+      const sc = ["Still learning", "Getting there", "I can do it!"];
+      return banner("checkbox", "Assessments", "Quick quizzes and activities to check what you've learned") + `
+      <section class="sec3">${secHead("qz-h", "Self-assessment quizzes", "Short, friendly quizzes. Try as many times as you like.")}
+        <div class="grid3 g-quiz">${QUIZZES.map((q, i) => quizCard(q, i)).join("")}</div></section>
+
+      <section class="panel panel3 rv" aria-labelledby="sc-h">${deco()}
+        ${secHead("sc-h", "How am I doing?", "Pick how you feel about each skill. There are no wrong answers.")}
+        <div class="scx">${SKILLS.map(([n], i) => { const [icn, c] = SK_STYLE[n]; return `<div class="scx-row" style="--c:${c};--i:${i}">${gi(icn, c, "gi-sm")}<b>${n}</b><div class="scx-opts" role="radiogroup" aria-label="${n}">${sc.map((l, k) => `<button type="button" role="radio" class="scx-o" data-sc="${n}" data-v="${k}" aria-checked="${selfCheck[n] === k}">${l}</button>`).join("")}</div></div>`; }).join("")}</div>
+        <button class="btn btn-acc" id="sc-save" style="--c:#2563EB">${ic("check")}Save my self-check</button>
+      </section>
+
+      <section class="sec3">${secHead("pa-h", "Practice activities", "Hands-on tasks that build the same skills.")}
+        <div class="grid3 g-pact">${PRACTICE.map(([id, obj, c, t, d, m], n) => `<div class="act pact rv ${done.has(id) ? "is-done" : ""}" style="--i:${n};--c:${c}"><span class="pact-obj">${art(obj)}</span><div class="act-t"><b>${t}</b><p>${d}</p><small>${ic("clock")}${m}</small></div><button class="act-btn" data-act="${id}" aria-pressed="${done.has(id)}">${ic("check")}<span>${done.has(id) ? "Done" : "Mark done"}</span></button></div>`).join("")}</div></section>
+      <p class="fine">${ic("shield")}Quizzes and self-checks are for practice. They show as learning activity, never as a skill level.</p>`;
+    }
     if (tab === "leap") return banner("rocket", "LEAP", "Leadership, Entrepreneurship and Achievement · Grades 3 to 10") + `
       <div class="card prog rv">${ring(62, "#0A84FF")}<div><span class="tag">Module 4</span><b class="pt">Find a problem worth solving</b><small>5 of 8 lessons · next class Tuesday</small></div></div>
       ${head("The venture journey", "One real venture every year")}
@@ -527,6 +543,84 @@
       `<div class="card wk3 rv"><span class="wk3-obj">${art("x-myclip")}</span><span class="wk3-t"><b><span id="wk-n">${doneActs}</span> of ${acts.length} done this week</b><small>About 40 minutes in total. Finished tasks show in the Skill Passport as learning activity.</small><span class="bar3"><span id="wk-bar" style="--w:${Math.round(doneActs / acts.length * 100)}%"></span></span></span></div>
       <div class="acts">${acts.map(([id, t, d, m, i, c], n) => `<div class="act rv ${done.has(id) ? "is-done" : ""}" style="--i:${n};--c:${c}">${gi(i, c)}<div class="act-t"><b>${t}</b><p>${d}</p><small>${ic("clock")}${m}</small></div><button class="act-btn" data-act="${id}" aria-pressed="${done.has(id)}">${ic("check")}<span>${done.has(id) ? "Done" : "Mark done"}</span></button></div>`).join("")}</div>
       <p class="fine">${ic("sparkle")}Home tasks show in the Skill Passport as learning activity, never as a skill score.</p>`;
+  }
+
+  /* ---------- self-assessment quizzes ---------- */
+  const QUIZZES = [
+    { id: "q1", obj: "x-masks", c: "#C026D3", title: "The Clever Crow", tag: "3L · Language", mins: 3, qs: [
+      ["Why did the crow drop pebbles into the pot?", ["To make the water rise", "To break the pot", "To build a nest"], 0],
+      ["What does “thirsty” mean?", ["Wanting to sleep", "Wanting a drink", "Wanting to play"], 1],
+      ["Which word describes the crow best?", ["Lazy", "Clever", "Scared"], 1],
+      ["What happened first in the story?", ["The crow drank the water", "The crow found a pot", "The crow flew home"], 1],
+      ["What can we learn from the crow?", ["Give up quickly", "Think of a smart way", "Wait for someone else"], 1]] },
+    { id: "q2", obj: "x-fly", c: "#F26B1D", title: "Picking the best problem", tag: "LEAP · Critical thinking", mins: 3, qs: [
+      ["A good problem to solve is one that…", ["Only you have", "Many people really have", "Nobody can ever fix"], 1],
+      ["What should you do before choosing a problem?", ["Talk to real people", "Guess quickly", "Copy a friend"], 0],
+      ["Which of these is a real problem at school?", ["Long queues at the water tap", "The sky is blue", "Friday comes after Thursday"], 0],
+      ["After picking a problem, the next step is…", ["Designing a solution", "Selling the product", "Forgetting about it"], 0]] },
+    { id: "q3", obj: "t-words", c: "#16A34A", title: "Words of the day", tag: "3L · Vocabulary", mins: 2, qs: [
+      ["A “pebble” is…", ["A small stone", "A tiny bird", "A kind of fruit"], 0],
+      ["Someone “clever” is…", ["Quick at thinking", "Very tall", "Always sleepy"], 0],
+      ["Which sentence uses “thirsty” correctly?", ["I am thirsty, may I have some water?", "The thirsty book is red.", "She ran thirsty to school."], 0]] },
+  ];
+  const quizBest = {};
+  const selfCheck = {};
+  const starsFor = (score, total) => (score === total ? 3 : score / total >= .6 ? 2 : score > 0 ? 1 : 0);
+  const starRow = (n, cls = "") => `<span class="qstars ${cls}" aria-label="${n} of 3 stars">${[1, 2, 3].map((k) => `<i class="${k <= n ? "on" : ""}" style="--k:${k}">${ic("star")}</i>`).join("")}</span>`;
+  const quizCard = (q, i) => { const b = quizBest[q.id];
+    return `<div class="qcard rv" style="--c:${q.c};--i:${i}" id="card-${q.id}"><span class="qcard-obj">${art(q.obj)}</span><span class="tag">${q.tag}</span><b>${q.title}</b>
+      <small>${q.qs.length} questions · about ${q.mins} min</small>
+      <span class="qcard-best">${b ? `${starRow(starsFor(b, q.qs.length))}Best: ${b} of ${q.qs.length}` : "Not tried yet"}</span>
+      <button class="btn btn-acc btn-sm" data-quiz="${q.id}">${b ? "Try again" : `Start quiz ${ic("arrow")}`}</button></div>`; };
+  const PRACTICE = [
+    ["p1", "x-books", "#7C3AED", "Retell the story in 5 pictures", "Draw five boxes and show the Crow's story in order. Then tell it aloud.", "20 min"],
+    ["p2", "x-mic", "#0A84FF", "Interview a shopkeeper", "Ask one question: “What problem do your customers have?” Write the answer down.", "15 min"],
+    ["p3", "t-words", "#16A34A", "Make a word wall", "Write today's words on cards and stick them where the family can see.", "10 min"],
+    ["p4", "t-seq", "#F26B1D", "Sort the story cards", "Shuffle the sequencing cards and put the story back in order.", "10 min"],
+  ];
+
+  // quiz runs in a native <dialog>: focus is trapped, Esc closes it
+  function openQuiz(id) {
+    const q = QUIZZES.find((x) => x.id === id); if (!q) return;
+    let dlg = $("#quiz");
+    if (!dlg) {
+      dlg = document.createElement("dialog"); dlg.id = "quiz"; dlg.className = "qz"; document.body.appendChild(dlg);
+      dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+    }
+    let k = 0, score = 0;
+    const shell = (inner) => `<div class="qz-in" style="--c:${q.c}"><div class="qz-h"><span class="qz-obj">${art(q.obj)}</span><span><small>${q.tag}</small><b>${q.title}</b></span><button class="qz-x" aria-label="Close quiz" data-qz="close">${ic("x")}</button></div>${inner}</div>`;
+    const step = () => {
+      const [text, opts, ans] = q.qs[k];
+      dlg.innerHTML = shell(`<div class="qz-prog"><span>Question ${k + 1} of ${q.qs.length}</span><span class="bar3"><span style="--w:${Math.round(k / q.qs.length * 100)}%"></span></span></div>
+        <div class="qz-body" key="${k}"><p class="qz-q">${text}</p><div class="qz-opts">${opts.map((o, j) => `<button type="button" class="qz-o" data-j="${j}"><span class="qz-l">${"ABC"[j]}</span><span>${o}</span></button>`).join("")}</div>
+        <p class="qz-fb" role="status" aria-live="polite"></p></div>
+        <div class="qz-f"><button class="btn btn-acc" data-qz="next" hidden>${k + 1 < q.qs.length ? "Next question" : "See my result"} ${ic("arrow")}</button></div>`);
+      $$(".qz-o", dlg).forEach((b) => b.addEventListener("click", () => {
+        const j = +b.dataset.j, ok = j === ans; if (ok) score++;
+        $$(".qz-o", dlg).forEach((x) => { x.disabled = true; if (+x.dataset.j === ans) x.classList.add("ok"); });
+        if (!ok) b.classList.add("no");
+        $(".qz-fb", dlg).innerHTML = ok ? `${ic("check")}Great thinking!` : `Not quite. The answer is <b>${opts[ans]}</b>.`;
+        $(".qz-fb", dlg).className = "qz-fb " + (ok ? "good" : "try");
+        const nx = $('[data-qz="next"]', dlg); nx.hidden = false; nx.focus();
+      }));
+      bindCommon();
+    };
+    const result = () => {
+      const st = starsFor(score, q.qs.length);
+      quizBest[q.id] = Math.max(quizBest[q.id] || 0, score);
+      const msg = st === 3 ? "Perfect! You really know this." : st === 2 ? "Well done! Nearly all correct." : "Good try! Read it once more and try again.";
+      dlg.innerHTML = shell(`<div class="qz-res">${starRow(st, "big")}<b class="qz-score">${score} of ${q.qs.length}</b><p>${msg}</p></div>
+        <div class="qz-f two"><button class="btn btn-ghost" data-qz="again">Try again</button><button class="btn btn-acc" data-qz="close">Done</button></div>`);
+      bindCommon();
+      const card = $(`#card-${q.id}`); if (card) { const tmp = document.createElement("div"); tmp.innerHTML = quizCard(q, 0); const nc = tmp.firstElementChild; nc.classList.add("in"); card.replaceWith(nc); $("[data-quiz]", nc).addEventListener("click", () => openQuiz(q.id)); }
+    };
+    const bindCommon = () => {
+      $$('[data-qz="close"]', dlg).forEach((b) => b.addEventListener("click", () => dlg.close()));
+      const nx = $('[data-qz="next"]', dlg); if (nx) nx.addEventListener("click", () => { k++; k < q.qs.length ? step() : result(); });
+      const ag = $('[data-qz="again"]', dlg); if (ag) ag.addEventListener("click", () => { k = 0; score = 0; step(); });
+    };
+    step();
+    if (!dlg.open) dlg.showModal();
   }
 
   /* ================= SKILL PASSPORT ================= */
@@ -626,26 +720,21 @@
   }
 
   /* ================= AYATI ACADEMY ================= */
-  let ayatiRole = "parent", resTab = "parents";
-  const registered = new Set();
+    const registered = new Set();
   const PROGRAMS = [
     ["mask", "3L Facilitation", "Run story, drama and speaking sessions for LKG to Grade 2.", 3, 4, "#C026D3", "Certificate"],
     ["rocket", "LEAP Facilitation", "Coach venture teams through pitches and Sales Day.", 2, 5, "#F04E23", "Certificate"],
     ["chart", "Assessment & Skill Passport", "Use the five-level rubric and the evidence workflow.", 1, 3, "#16A34A", "Certificate"],
-    ["heart", "Parenting courses", "Confidence, screen time, money skills and exams.", 1, 6, "#0A84FF", "Live + self-paced"],
   ];
   const progCard = ([i, t, d, dn, n, c, tag], k) => `<a class="prc rv" href="#/ayati/modules" style="--c:${c};--i:${k}">${gi(i, c)}<span class="tag">${tag}</span><b>${t}</b><p>${d}</p>${bar(Math.round(dn / n * 100), c)}<small>${dn} of ${n} modules</small></a>`;
-  const VIDART = { "How to talk about failure": "vid-3", "Supporting your child on stage": "vid-1", "Money conversations with kids": "vid-2", "Growth mindset for parents": "vid-4",
-    "The Skilido way": "vid-4", "Running a 3L session": "vid-1", "Coaching a LEAP team": "vid-2", "Assessing with the rubric": "vid-3" };
-  const COURSEART = { "3L Facilitation": "course-2", "LEAP Facilitation": "course-1", "Parenting courses": "course-1" };
+  const VIDART = { "The Skilido way": "vid-4", "Running a 3L session": "vid-1", "Coaching a LEAP team": "vid-2", "Assessing with the rubric": "teacher" };
+  const COURSEART = { "3L Facilitation": "course-2", "LEAP Facilitation": "course-1" };
   function ayatiRoleBlock() {
-    const t = ayatiRole === "teacher";
-    const vids = t
-      ? [["book", "#7C3AED", "The Skilido way", "Module 1", "18 min"], ["mask", "#C026D3", "Running a 3L session", "Module 2", "25 min"], ["rocket", "#F26B1D", "Coaching a LEAP team", "Module 3", "30 min"], ["chart", "#16A34A", "Assessing with the rubric", "Module 4", "25 min"]]
-      : [["mic", "#F59E0B", "How to talk about failure", "4 short videos", "20 min"], ["mask", "#C026D3", "Supporting your child on stage", "Linked to 3L", "3 lessons"], ["store", "#16A34A", "Money conversations with kids", "Linked to LEAP", "5 lessons"], ["bulb", "#7C3AED", "Growth mindset for parents", "Self-paced", "6 modules"]];
-    const courses = t ? PROGRAMS.slice(0, 3) : PROGRAMS.slice(3).concat([["award", "Screen-smart family", "Earned October 2026", 1, 1, "#F59E0B", "Earned"]]);
-    const live = t ? ["Thursday · 4:30 PM", "Running a 3L performance day", "Monthly refresher for Skill Champions"] : ["Today · 7:00 PM", "Raising confident speakers at home", "Live parent course · 45 min"];
-    const lid = t ? "lv-t" : "lv-p";
+    const t = true;
+    const vids = [["book", "#7C3AED", "The Skilido way", "Module 1", "18 min"], ["mask", "#C026D3", "Running a 3L session", "Module 2", "25 min"], ["rocket", "#F26B1D", "Coaching a LEAP team", "Module 3", "30 min"], ["chart", "#16A34A", "Assessing with the rubric", "Module 4", "25 min"]];
+    const courses = PROGRAMS;
+    const live = ["Thursday · 4:30 PM", "Running a 3L performance day", "Monthly refresher for Skill Champions"];
+    const lid = "lv-t";
     return `
       <section class="sec-s">${head(`${gi("play", "#7C3AED", "gi-xs")}Learn and watch`, t ? "Core modules for Skill Champions." : "Short, practical videos for home.", `<a class="tlink" href="#/ayati/${t ? "modules" : "live"}">View all ${ic("chev")}</a>`)}
         <div class="vids">${vids.map(([i, c, title, meta, dur], n) => `<button class="vid rv" style="--c:${c};--i:${n}" data-toast="Videos play inside Ayati Academy when it launches."><span class="vid-art${VIDART[title] ? " vid-photo" : ""}">${VIDART[title] ? art(VIDART[title]) : gi(i, c, "gi-md")}<span class="vid-play">${ic("play")}</span><span class="dur">${dur}</span></span><b>${title}</b><small>${meta}</small></button>`).join("")}</div>
@@ -654,39 +743,28 @@
         <div class="panel panel3 has-art rv">${deco()}<span class="p3-art float" aria-hidden="true">${art("x-capbook")}</span><h2 class="panel-h">${gi("award", "#7C3AED", "gi-sm")}${t ? "Certification courses" : "Courses for you"}<i class="rays" aria-hidden="true"></i></h2><p class="muted">${t ? "Get certified. Build your expertise." : "Learn at your own pace."}</p>
           <div class="clist">${courses.map(([i, title, d, dn, n, c, tag]) => `<a class="crow" href="#/ayati/${tag === "Earned" ? "certificates" : "programs"}" style="--c:${c}">${COURSEART[title] ? `<span class="thumb-pic">${art(COURSEART[title])}</span>` : gi(i, c, "gi-thumb")}<span><b>${title}</b><small>${ic(tag === "Earned" ? "award" : "book")}${tag === "Earned" ? d : `${n} modules · ${tag}`}</small></span><span class="go">${ic("arrow")}</span></a>`).join("")}</div>
         </div>
-        <div class="panel panel3 has-art rv">${deco()}<span class="p3-art float f2" aria-hidden="true">${art("x-folder")}</span><h2 class="panel-h">${gi("folder", "#7C3AED", "gi-sm")}Resources<i class="rays" aria-hidden="true"></i></h2><p class="muted">Ready-to-use materials for classroom and home.</p>
-          <div class="seg2" role="tablist"><span class="seg2-pill" aria-hidden="true"></span>${[["teachers", "For teachers"], ["parents", "For parents"]].map(([k, l]) => `<button role="tab" data-res="${k}" aria-selected="${resTab === k}">${l}</button>`).join("")}</div>
+        <div class="panel panel3 has-art rv">${deco()}<span class="p3-art float f2" aria-hidden="true">${art("x-folder")}</span><h2 class="panel-h">${gi("folder", "#7C3AED", "gi-sm")}Resources<i class="rays" aria-hidden="true"></i></h2><p class="muted">Ready-to-use materials for your classroom.</p>
           <div class="res-grid" id="res-grid">${resTiles()}</div>
         </div>
       </section>
-      <section class="panel panel3 rv">${deco()}${head(`${gi("cal", "#7C3AED", "gi-sm")}Virtual expert sessions<i class="rays" aria-hidden="true"></i>`, "Live sessions with education and parenting experts.", `<a class="tlink" href="#/ayati/live">All sessions ${ic("chev")}</a>`)}
+      <section class="panel panel3 rv">${deco()}${head(`${gi("cal", "#7C3AED", "gi-sm")}Virtual expert sessions<i class="rays" aria-hidden="true"></i>`, "Live sessions with education experts and Skill Champions.", `<a class="tlink" href="#/ayati/live">All sessions ${ic("chev")}</a>`)}
         <div class="xsess"><span class="xs-art xs-photo">${art("expert", "Session expert")}</span>
           <span class="xs-t"><span class="badge-live"><i></i>Live</span><b>${live[1]}</b><small>${live[2]}</small><small>${ic("cal")}${live[0]}</small></span>
           <span class="xs-obj" aria-hidden="true">${art("x-micbooks")}</span><button class="btn btn-acc" data-register="${lid}" aria-pressed="${registered.has(lid)}">${registered.has(lid) ? `${ic("check")}Registered` : `Register now ${ic("arrow")}`}</button></div>
       </section>`;
   }
   function resTiles() {
-    const r = resTab === "teachers"
-      ? [["file", "#0A84FF", "Lesson plans"], ["image", "#F26B1D", "Activity sheets"], ["checkbox", "#16A34A", "Worksheets"], ["box", "#7C3AED", "Project kits"]]
-      : [["home", "#E11D74", "Home activity guides"], ["heart", "#EF4444", "Family challenges"], ["msg", "#16A34A", "Words of the day"], ["mic", "#0A84FF", "Speaking cards"]];
+    const r = [["file", "#0A84FF", "Lesson plans"], ["image", "#F26B1D", "Activity sheets"], ["checkbox", "#16A34A", "Worksheets"], ["box", "#7C3AED", "Project kits"]];
     return r.map(([i, c, t], n) => `<button class="rtile" style="--c:${c};--i:${n}" data-toast="The resource library opens when Ayati Academy launches.">${gi(i, c, "gi-sm")}<b>${t}</b></button>`).join("");
   }
   function ayatiPane(tab) {
     const live = (when, t, d, btn, id) => `<div class="card live rv"><span class="badge-live"><i></i>${when}</span><b>${t}</b><small>${d}</small><button class="btn btn-white btn-sm" data-register="${id}" aria-pressed="${registered.has(id)}">${registered.has(id) ? `${ic("check")}Registered` : btn}</button></div>`;
-    if (tab === "overview") return hero(`<span class="brandblk"><span class="bb-l">${gi("cap", "#7C3AED", "gi-bb")}<span><span class="bb-n">Ayati Academy</span><span class="bb-t">Learn · Train · Empower</span></span></span><span class="bb-d" aria-hidden="true"></span><span class="bb-r">For educators ${swoosh("&amp; parents")}</span></span>`, "Practical learning, expert guidance and certification for better child development.",
-        `<span class="hero-pic float">${art("ayati-family")}</span>`,
+    if (tab === "overview") return hero(`<span class="brandblk"><span class="bb-l">${gi("cap", "#7C3AED", "gi-bb")}<span><span class="bb-n">Ayati Academy</span><span class="bb-t">Learn · Train · Empower</span></span></span><span class="bb-d" aria-hidden="true"></span><span class="bb-r">For ${swoosh("teachers")}</span></span>`, "Practical training, classroom resources and certification for teachers and Skill Champions.",
+        `<span class="art-main art-obj art-cap">${art("x-capbook")}</span>`,
         `<a class="btn btn-sun" href="#/ayati/modules">Continue Module 4 ${ic("arrow")}</a><a class="tlink tlink-lg" href="#/ayati/programs">All courses ${ic("chev")}</a>`) + `
-      <section class="iam rv" aria-label="I am a">
-        <span class="iam-l">I am a</span>
-        <div class="iam-sw" role="radiogroup">
-          <span class="iam-pill" aria-hidden="true"></span>
-          <button role="radio" data-role="teacher" aria-checked="${ayatiRole === "teacher"}">${ic("user")}<span><b>Teacher</b><small>Teach better, access classroom resources</small></span></button>
-          <button role="radio" data-role="parent" aria-checked="${ayatiRole === "parent"}">${ic("users")}<span><b>Parent</b><small>Support your child's growth at home</small></span></button>
-        </div>
-      </section>
       <div id="role-block">${ayatiRoleBlock()}</div>
       <a class="card xlink rv" href="${PLATFORMS.club.url}" data-x="club" style="--x:#4F46E5">${gi("users", "#4F46E5")}<span><b>Ayati modules are live in Icons Family Club</b><small>Teachers take today's modules in the Club's teacher space.</small></span>${ic("ext")}</a>`;
-    if (tab === "programs") return banner("award", "Courses", "Certification tracks for educators and courses for parents") + `<div class="prgrid">${PROGRAMS.map(progCard).join("")}</div>`;
+    if (tab === "programs") return banner("award", "Courses", "Certification tracks for teachers and Skill Champions") + `<div class="prgrid">${PROGRAMS.map(progCard).join("")}</div>`;
     if (tab === "modules") return banner("book", "Modules", "Skill Champion core curriculum") + `
       <div class="card nextmod rv">
         <span class="tag">Up next</span><b class="pt">Module 4 · Assessing with the rubric</b>
@@ -697,39 +775,78 @@
       ${head("All modules")}
       ${rows([["done", "1 · The Skilido way", "Video · 18 min"], ["done", "2 · Running a 3L session", "Video + PDF · 25 min"], ["done", "3 · Coaching a LEAP team", "Video + PDF · 30 min"], ["now", "4 · Assessing with the rubric", "Video + practice · 25 min", "Now"], ["lock", "5 · Evidence and the Skill Passport", "Unlocks after Module 4"]], "#7C3AED")}`;
     if (tab === "live") return banner("video", "Live", "Live courses and monthly refreshers") +
-      `<div class="duo duo-tight">${live("Today · 7:00 PM", "Raising confident speakers at home", "Parent course · 45 min · 128 parents joined", "Remind me and join", "lv-p")}${live("Thursday · 4:30 PM", "Running a 3L performance day", "Skill Champion refresher · 45 min", "Remind me", "lv-t")}</div>` +
-      head("Recordings") + rows([["done", "Coaching shy speakers", "Recorded · 40 min"], ["done", "Screen-smart families", "Recorded · 35 min"], ["done", "Sales Day without stress", "Recorded · 38 min"]], "#7C3AED");
+      `<div class="duo duo-tight">${live("Today · 7:00 PM", "Coaching shy speakers in class", "Teacher workshop · 45 min · 86 teachers joined", "Remind me and join", "lv-p")}${live("Thursday · 4:30 PM", "Running a 3L performance day", "Skill Champion refresher · 45 min", "Remind me", "lv-t")}</div>` +
+      head("Recordings") + rows([["done", "Coaching shy speakers", "Recorded · 40 min"], ["done", "Rubric scoring clinic", "Recorded · 35 min"], ["done", "Sales Day without stress", "Recorded · 38 min"]], "#7C3AED");
     return banner("idcard", "Certificates", "Earned and in progress") + `
       <div class="certificate rv">
         <div class="ce-in">
           <img src="assets/brand/skilido-dark.webp" alt="Skilido" width="96" height="29">
-          <small>Ayati Academy · Certificate of completion</small>
-          <b class="ce-name">${DEMO.full}</b><p>has completed the parent course</p><b class="ce-course">Screen-smart family</b>
+          <small>Ayati Academy · Certificate of completion · sample</small>
+          <b class="ce-name">Ms. Priya</b><p>has completed the certification course</p><b class="ce-course">3L Facilitation</b>
           <div class="ce-foot"><span>October 2026</span><span class="ce-seal">${ic("award")}</span><span>No. AY-2026-0418</span></div>
         </div>
       </div>
       <div class="btn-row rv"><button class="btn btn-ghost" data-toast="Downloads a PDF when certificates launch.">${ic("download")}Download</button><button class="btn btn-acc" data-toast="Shares a verification link when certificates launch.">${ic("share")}Share</button></div>
       ${head("In progress")}
       <div class="card course rv">${gi("award", "#7C3AED", "gi-thumb")}<span class="row-t"><b>Skill Champion · 3L and LEAP</b><small>3 of 5 modules</small>${bar(60)}</span></div>
-      <div class="card course rv">${gi("bulb", "#0A84FF", "gi-thumb")}<span class="row-t"><b>Growth mindset for parents</b><small>Module 3 of 6</small>${bar(50, "#0A84FF")}</span></div>`;
+      <div class="card course rv">${gi("rocket", "#F04E23", "gi-thumb")}<span class="row-t"><b>LEAP Facilitation</b><small>2 of 5 modules</small>${bar(40, "#F04E23")}</span></div>`;
   }
 
   /* ================= LIFELAB ================= */
+  // [id, title, where, image, photo?, colour, status, deadline, days left, stars, extra]
+  const MY_CH = [
+    ["w1", "Help our school save water", "Accord School · Grades 5–9 · team of 4", "rec-1", true, "#0EA5E9", "active", "Fri, 28 Nov", 7, 50, { step: 3, idea: "Drip-tray bottles under every tap to reuse water for the garden." }],
+    ["w2", "Kindness at home week", "Family challenge · 7 days", "x-qhouse", false, "#E11D74", "active", "Tue, 2 Dec", 11, 30, { step: 2 }],
+    ["w3", "Zero-waste lunchbox week", "Family challenge · verified by a Skill Champion", "vid-4", true, "#16A34A", "done", "Completed 14 Nov", 0, 30, {}],
+  ];
+  const OPEN_CH = [
+    ["o1", "Safer school gate at pickup time", "Tirupati Ward 12 · Grades 6–9 · 2 weeks", "rec-3", true, "#F97316", "Community", "Fri, 5 Dec", 14, 60],
+    ["o2", "Get more kids into the library", "Accord School · Grades 3–6 · 3 weeks", "rec-2", true, "#A855F7", "School", "Fri, 12 Dec", 21, 40],
+    ["o3", "A plastic-free classroom week", "Family + school · Grades 3–8 · 1 week", "x-lifelab", false, "#22C55E", "Family", "Mon, 8 Dec", 17, 35],
+    ["o4", "Mini market for a cause", "Accord School · Grades 5–8 · 3 weeks", "x-bazaar", false, "#F59E0B", "School", "Mon, 15 Dec", 24, 70],
+    ["o5", "Speak up for your street", "Tirupati Ward 12 · Grades 4–9 · 2 weeks", "x-mic", false, "#7C3AED", "Community", "Wed, 10 Dec", 19, 45],
+    ["o6", "Design a reading corner", "Accord School · Grades 3–5 · 2 weeks", "x-books", false, "#0A84FF", "School", "Thu, 18 Dec", 27, 40],
+  ];
+  const STAR_HISTORY = [["Zero-waste lunchbox week", 30, "14 Nov"], ["Neighbourhood clean-up", 50, "18 Oct"], ["Plant a tree drive", 40, "20 Sep"]];
+  const submitted = new Set(), joinedCh = new Set();
+  const starsEarned = () => STAR_HISTORY.reduce((a, x) => a + x[1], 0);
+  const chPic = (img, photo, c) => `<span class="ch3-pic ${photo ? "is-photo" : "is-obj"}" style="--c:${c}">${art(img)}</span>`;
+  const starChip = (n, earned) => `<span class="ch3-stars${earned ? " earned" : ""}">${ic("star")}${earned ? "+" : ""}${n}</span>`;
+  const daysTag = (d) => `<span class="ch3-due${d <= 7 ? " soon" : ""}">${ic("clock")}${d} day${d === 1 ? "" : "s"} left</span>`;
+  function myCard([id, t, where, img, photo, c, st, due, days, stars, x], i) {
+    const sub = submitted.has(id);
+    const action = st === "done" ? `<a class="btn btn-ghost btn-sm" href="#/passport/timeline">${ic("award")}View evidence</a>`
+      : `<button class="btn btn-acc btn-sm" data-submit="${id}" data-stars="${stars}" aria-pressed="${sub}">${sub ? `${ic("check")}Submitted · in review` : `${ic("plus")}Submit work`}</button>`;
+    return `<article class="ch3 rv" style="--c:${c};--i:${i}">${chPic(img, photo, c)}<span class="ch3-tag">${st === "done" ? "Completed" : "In progress"}</span>${starChip(stars, st === "done")}
+      <div class="ch3-b"><b>${t}</b><small>${where}</small>
+        ${st === "done" ? `<span class="ch3-dl ok">${ic("check")}${due} · ${stars} stars earned</span>` : `<span class="ch3-dl">${ic("cal")}Submit by ${due}${daysTag(days)}</span>`}
+        ${x.step ? `<div class="seg4">${[1, 2, 3, 4].map((n) => `<i class="${n <= x.step ? "f" : ""}" style="--d:${n}"></i>`).join("")}</div><small class="ch3-steps">Understand · Ideate · Build · Present</small>` : ""}
+        ${x.idea ? `<p class="idea">Aarav's idea: “${x.idea}”</p>` : ""}
+        ${action}</div></article>`;
+  }
+  function openCard([id, t, where, img, photo, c, kind, due, days, stars], i) {
+    const j = joinedCh.has(id);
+    return `<article class="ch3 rv" style="--c:${c};--i:${i}">${chPic(img, photo, c)}<span class="ch3-tag">${kind}</span>${starChip(stars)}
+      <div class="ch3-b"><b>${t}</b><small>${where}</small><span class="ch3-dl">${ic("cal")}Join by ${due}${daysTag(days)}</span>
+        <button class="btn btn-acc btn-sm" data-joinch="${id}" data-stars="${stars}" data-due="${due}" aria-pressed="${j}">${j ? `${ic("check")}Joined` : `Join challenge ${ic("arrow")}`}</button></div></article>`;
+  }
+  function starsCard() {
+    const n = starsEarned(), goal = 150, open = MY_CH.filter((c) => c[6] === "active").reduce((a, c) => a + c[9], 0);
+    return `<section class="stars3 rv"><span class="stars3-obj float">${art("t-stickers")}</span>
+      <div class="stars3-t"><small>${DEMO.child}'s LifeLab stars</small><b><span data-count="${n}">0</span> stars earned</b>
+        <span class="prow-bar"><span class="bar3"><span style="--w:${Math.round(n / goal * 100)}%"></span></span><em>${n}/${goal}</em></span>
+        <small>${goal - n} more for the <b>Bronze Changemaker</b> badge · ${open} stars waiting in active challenges</small></div>
+      <ul class="stars3-h">${STAR_HISTORY.map(([t, s, d]) => `<li><span>${t}<small>${d}</small></span><em>+${s}</em></li>`).join("")}</ul></section>`;
+  }
   function lifelabPane(tab) {
     if (tab === "challenges") return hero(`Real problems. ${swoosh("Real impact.")}`, `${DEMO.child}'s challenges from school, family and community.`,
-        `<span class="art-main art-obj">${art("x-lifelab", "")}</span>
-         <span class="spark s1">${ic("sparkle")}</span><span class="spark s2">${ic("star")}</span>`) + `
-      <div class="cgrid">
-        <div class="chal rv" style="--a:#0EA5E9;--b:#2563EB"><div class="ban">${gi("drop", "#0EA5E9", "gi-md")}<span class="tag tag-w">In progress</span></div>
-          <div class="chal-b"><b class="pt">Help our school save water</b><small>Accord School · Grades 5–9 · team of 4</small>
-          <div class="seg4">${[1, 2, 3, 4].map((n) => `<i class="${n <= 3 ? "f" : ""}" style="--d:${n}"></i>`).join("")}</div>
-          <small>Understand · Ideate · <b>Build</b> · Present</small>
-          <p class="idea">Aarav's idea: “Drip-tray bottles under every tap to reuse water for the garden.”</p></div></div>
-        <div class="chal rv" style="--a:#22C55E;--b:#15803D"><div class="ban">${gi("leaf", "#16A34A", "gi-md")}<span class="tag tag-w">Completed</span></div>
-          <div class="chal-b"><b class="pt">Zero-waste lunchbox week</b><small>Family challenge · verified by a Skill Champion</small></div></div>
-      </div>`;
-    if (tab === "open") return banner("search", "Open challenges", "Matched to grade and interests") + `<div class="cgrid">${[["traffic", "Safer school gate at pickup time", "Tirupati Ward 12 · Grades 6–9 · 2 weeks", "Community", "#F97316", "#DC2626"], ["library", "Get more kids into the library", "Accord School · Grades 3–6 · 3 weeks", "School", "#A855F7", "#6D28D9"], ["leaf", "A plastic-free classroom week", "Family + school · Grades 3–8 · 1 week", "Family", "#22C55E", "#15803D"]]
-      .map(([i, t, s, tag, a, b]) => `<div class="chal rv" style="--a:${a};--b:${b}"><div class="ban">${gi(i, a, "gi-md")}<span class="tag tag-w">${tag}</span></div><div class="chal-b"><b class="pt">${t}</b><small>${s}</small><button class="btn btn-acc btn-sm" data-toast="Aarav accepts in the student app, then joins a team.">Suggest to Aarav</button></div></div>`).join("")}</div>`;
+        `<span class="art-main art-obj">${art("x-lifelab", "")}</span>`) + starsCard() + `
+      <section class="sec3">${secHead("ac-h", "Active challenges", "Submit before the deadline to earn the stars.")}
+        <div class="grid3 g-ch">${MY_CH.filter((c) => c[6] === "active").map(myCard).join("")}</div></section>
+      <section class="sec3">${secHead("dn-h", "Completed", "Verified by a Skill Champion.")}
+        <div class="grid3 g-ch">${MY_CH.filter((c) => c[6] === "done").map(myCard).join("")}</div></section>`;
+    if (tab === "open") return banner("search", "Open challenges", "Matched to grade and interests. Earn stars for every finished challenge.") + `
+      <div class="grid3 g-ch">${[...OPEN_CH].sort((a, b) => a[8] - b[8]).map(openCard).join("")}</div>`;
     return banner("plus", "Post a challenge", "Children solve real problems and earn verified evidence.") + `
       <form class="card pform rv" id="pform" novalidate>
         <div class="fld fld-light"><input id="pt" placeholder=" "><label for="pt">Challenge title</label></div>
@@ -744,6 +861,31 @@
 
   /* ---------- portal interactions ---------- */
   function enhancePortal(scope) {
+    // quizzes
+    $$("[data-quiz]", scope).forEach((b) => b.addEventListener("click", () => openQuiz(b.dataset.quiz)));
+    // self-check: one choice per skill
+    $$("[data-sc]", scope).forEach((b) => b.addEventListener("click", () => {
+      selfCheck[b.dataset.sc] = +b.dataset.v;
+      $$(`[data-sc="${b.dataset.sc}"]`, scope).forEach((x) => x.setAttribute("aria-checked", x === b));
+    }));
+    const scs = $("#sc-save", scope);
+    if (scs) scs.addEventListener("click", () => {
+      const n = Object.keys(selfCheck).length;
+      toast(n ? `Saved. ${n} of ${SKILLS.length} skills checked. Your teacher can see how you feel.` : "Pick how you feel about at least one skill first.");
+    });
+    // LifeLab: submit work, join a challenge
+    $$("[data-submit]", scope).forEach((b) => b.addEventListener("click", () => {
+      const id = b.dataset.submit;
+      if (submitted.has(id)) { toast("Already submitted. A Skill Champion is reviewing it."); return; }
+      submitted.add(id); b.setAttribute("aria-pressed", "true"); b.innerHTML = `${ic("check")}Submitted · in review`;
+      toast(`Submitted! A Skill Champion reviews it within 3 days. +${b.dataset.stars} stars when it's approved.`);
+    }));
+    $$("[data-joinch]", scope).forEach((b) => b.addEventListener("click", () => {
+      const id = b.dataset.joinch, on = !joinedCh.has(id);
+      on ? joinedCh.add(id) : joinedCh.delete(id);
+      b.setAttribute("aria-pressed", on); b.innerHTML = on ? `${ic("check")}Joined` : `Join challenge ${ic("arrow")}`;
+      toast(on ? `${DEMO.child} joined. Join by ${b.dataset.due} and earn up to ${b.dataset.stars} stars.` : "Left the challenge.");
+    }));
     // to-do ticks
     const countTodos = () => { const c = $("#todo-count", scope); if (c) { const left = TODOS.filter(([id]) => !done.has(id)).length; c.textContent = left ? `${left} left` : "All done"; c.classList.toggle("all", !left); } };
     countTodos();
@@ -774,31 +916,6 @@
       b.innerHTML = on ? `${ic("check")}Registered` : (b.classList.contains("btn-white") ? "Remind me" : `Register now ${ic("arrow")}`);
       if (on) toast("You're registered. The join link opens inside Skilido at start time.");
     }));
-    // Ayati "I am a" switch
-    const sw = $(".iam-sw", scope);
-    if (sw) {
-      const pill = $(".iam-pill", sw), btns = $$("button", sw);
-      const place = (anim) => { const b = btns.find((x) => x.dataset.role === ayatiRole); pill.style.transition = anim ? "" : "none"; pill.style.width = b.offsetWidth + "px"; pill.style.height = b.offsetHeight + "px"; pill.style.transform = `translate(${b.offsetLeft}px, ${b.offsetTop}px)`; };
-      requestAnimationFrame(() => place(false));
-      btns.forEach((b) => b.addEventListener("click", () => {
-        if (b.dataset.role === ayatiRole) return;
-        ayatiRole = b.dataset.role; resTab = ayatiRole === "teacher" ? "teachers" : "parents";
-        btns.forEach((x) => x.setAttribute("aria-checked", x === b)); place(true);
-        vt(() => { $("#role-block").innerHTML = ayatiRoleBlock(); enhance($("#role-block")); }, "swap");
-      }));
-      addEventListener("resize", () => document.body.contains(sw) && place(false));
-    }
-    // resources toggle
-    const seg = $(".seg2", scope);
-    if (seg) {
-      const pill = $(".seg2-pill", seg), btns = $$("button", seg);
-      const place = (anim) => { const b = btns.find((x) => x.dataset.res === resTab); pill.style.transition = anim ? "" : "none"; pill.style.width = b.offsetWidth + "px"; pill.style.transform = `translateX(${b.offsetLeft - 4}px)`; };
-      requestAnimationFrame(() => place(false));
-      btns.forEach((b) => b.addEventListener("click", () => {
-        resTab = b.dataset.res; btns.forEach((x) => x.setAttribute("aria-selected", x === b)); place(true);
-        const g = $("#res-grid", scope); g.classList.add("swap"); setTimeout(() => { g.innerHTML = resTiles(); g.classList.remove("swap"); }, reduce.matches ? 0 : 140);
-      }));
-    }
     // recommendations slider
     $$("[data-slide]", scope).forEach((b) => b.addEventListener("click", () => {
       const r = $("#recs", scope); const step = r.firstElementChild.offsetWidth + 12;
