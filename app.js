@@ -54,6 +54,10 @@
   ];
   const NAV = [["home", "Home", "home"], ["learn", "Learn", "book"], ["ayati", "Ayati", "cap"], ["passport", "Passport", "idcard"], ["lifelab", "LifeLab", "bulb"]];
 
+  document.fonts?.ready.then(() => {
+    if (cur.view && cur.view !== "login") { setNav(cur.view === "home" ? "home" : cur.p, false); if (cur.view === "product") setTabs(cur.tab, false); }
+  });
+
   /* ================= session ================= */
   const KEY = "skilido.one";
   const session = {
@@ -291,9 +295,7 @@
     ["passport", "x-passport", "Track skills, progress and achievements"],
     ["fly", "x-fly", "A Venture Lab for curious young founders"],
     ["bazaar", "x-bazaar", "Kids' own creations and products"],
-    ["spotlight", "x-mic", "A stage for every child's talent"],
     ["ayati", "x-ayati", "Training and certification for teachers"],
-    ["club", "t-puppets", "The Icons Family Club community"],
     ["lifelab", "x-lifelab", "Build life skills like confidence, empathy and teamwork"],
   ];
   // shared 3D card: pastel tile, floating object, title, text, arrow chip
@@ -319,7 +321,7 @@
             <li style="--c:#E11D74"><span class="tr-ic">${ic("star")}</span>Trusted by parents & educators</li>
           </ul>
         </div>
-        <div class="hx2-art float">${art("s-home", "The Skilido StoryBox and LEAP kits beside a smiling student")}</div>
+        <div class="hx2-art float">${learningScene("kits")}</div>
       </section>
 
       <section class="sec3" aria-labelledby="ex-h">
@@ -354,7 +356,7 @@
           <a class="urow2 rv" href="${PLATFORMS.spotlight.url}" data-x="spotlight" style="--c:#C026D3;--i:2">${gi("cal", "#C026D3", "gi-sm")}<span><b>Spotlight 2027 school registrations</b><small>Opens spotlight.skilido.com</small></span><span class="when">Open now</span></a>
         </div>
       </section>
-      <p class="foot">© 2026 ADK Education Park Private Limited · <a href="https://skilido.com/privacy">Privacy</a> · <a href="https://skilido.com/terms">Terms</a> · <a href="mailto:support@skilido.com">Help</a></p>
+      <nav class="platform-links" aria-label="More Skilido platforms"><a href="${PLATFORMS.spotlight.url}" data-x="spotlight">${ic("mic")}Spotlight ${ic("ext")}</a><a href="${PLATFORMS.club.url}" data-x="club">${ic("users")}Icons Family Club ${ic("ext")}</a></nav><p class="foot">© 2026 ADK Education Park Private Limited · <a href="https://skilido.com/privacy">Privacy</a> · <a href="https://skilido.com/terms">Terms</a> · <a href="mailto:support@skilido.com">Help</a></p>
     </div>`;
   }
   function bindHome() {
@@ -430,8 +432,28 @@
 
   /* ---------- shared building blocks ---------- */
   // glossy icon tile, the signature element of the portal design
-  // artwork cut from the Skilido design references (assets/art)
-  const art = (name, alt = "", cls = "") => `<img class="art ${cls}" src="assets/art/${name}.webp?v=4" alt="${alt}" decoding="async">`;
+  // New generated artwork is independent from the semantic interface.
+  const SPRITES = {
+    "x-learn":0,"x-qbook":0,"x-mybook":0,"x-sbook":0,"t-books":0,
+    "x-passport":1,"x-qchart":1,"x-mychart":1,"x-schart":1,
+    "x-fly":2,"x-rocket":2,"rocket":2,"prog-rocket":2,
+    "x-bazaar":3,"x-ayati":4,"ic-ayati":4,"x-capbook":4,
+    "x-lifelab":5,"x-bulbbooks":5,"x-myclip":6,"x-clip2":6,
+    "x-mycal":7,"x-scal":7,"x-qshield":8,"x-qvideo":9,
+    "x-qhouse":10,"x-headph":11,"x-books":12,"x-masks":13,
+    "t-stage":13,"x-mic":14,"x-micbooks":14,"t-speak":14,"x-clapper":15
+  };
+  const TOOL_ICONS = {"t-seq":"layers","t-dice":"dice","t-words":"msg","t-puppets":"users","t-journey":"book","t-family":"heart","t-stickers":"star","x-folder":"folder","x-trophy":"award"};
+  const art = (name, alt = "", cls = "") => {
+    if (Object.hasOwn(SPRITES,name)) {
+      const n=SPRITES[name], x=(n%4)*100/3, y=Math.floor(n/4)*100/3;
+      return `<span class="art art-sprite ${cls}" style="background-position:${x}% ${y}%" ${alt ? `role="img" aria-label="${esc(alt)}"` : 'aria-hidden="true"'}></span>`;
+    }
+    if (TOOL_ICONS[name]) return `<span class="art art-drawn ${cls}" aria-hidden="true">${ic(TOOL_ICONS[name])}</span>`;
+    const generated = ["teacher","expert","course-1","course-2","vid-1","vid-2","vid-3","vid-4"].includes(name) ? "educators" : name === "aarav" ? "student" : null;
+    return `<img class="art ${cls}" src="${generated ? `assets/generated/${generated}-v1.webp` : `assets/art/${name}.webp?v=4`}" alt="${esc(alt)}" decoding="async">`;
+  };
+  const learningScene = (kind) => `<span class="scene scene-kind-${kind}" aria-hidden="true"><span class="scene-hill"></span><span class="scene-podium"></span>${kind === "teachers" ? '<img class="scene-educators" src="assets/generated/educators-v1.webp" alt="">' : `${kind === "kits" ? '<img class="scene-kits" src="assets/generated/kits-v1.webp" alt="">' : `<span class="scene-books">${art("x-books")}</span><span class="scene-rocket">${art("x-fly")}</span>`}<img class="scene-student" src="assets/generated/student-v1.webp" alt="">`}<span class="scene-spark scene-spark-a">${ic("sparkle")}</span><span class="scene-spark scene-spark-b">${ic("sparkle")}</span><span class="scene-book">${ic("book")}</span><span class="scene-cloud scene-cloud-a"></span><span class="scene-cloud scene-cloud-b"></span></span>`;
   const deco = () => `<span class="deco" aria-hidden="true"><i class="d1"></i><i class="d2"></i><i class="d3"></i><i class="d4"></i><i class="d5"></i><i class="st s-a">${ic("sparkle")}</i><i class="st s-b">${ic("star")}</i></span>`;
   const gi = (icon, c, size = "") => `<span class="gi ${size}"${c ? ` style="--c:${c}"` : ""}>${ic(icon)}</span>`;
   const swoosh = (word) => `<span class="sw">${word}<svg viewBox="0 0 220 22" preserveAspectRatio="none" aria-hidden="true"><path d="M4 15 C 60 4, 150 3, 216 12"/></svg></span>`;
@@ -453,7 +475,7 @@
       const tiles = [["x-qbook", "#0A84FF", "Learn", "Watch · read · understand", "#/learn/stories"], ["x-qchart", "#16A34A", "Practise", "Try activities, build skills", "#/learn/leap"],
         ["x-qshield", "#F59E0B", "Assessment", "Quizzes and self-checks", "#/learn/assess"], ["x-qvideo", "#7C3AED", "Join class", "Live and virtual sessions", "scroll:classes"], ["x-qhouse", "#E11D74", "Home tasks", "Do them together", "#/learn/home"]];
       return hero(`Learn. Practise. ${swoosh("Prove.")}`, `${DEMO.child}'s 3L and LEAP learning space.`,
-        `<span class="hero-pic hero-scene">${art("s-learn", "A smiling student with a rocket and books")}</span>`,
+        `<span class="hero-pic hero-scene">${learningScene("learn")}</span>`,
         `<a class="btn btn-sun" href="#/learn/leap">Continue LEAP ${ic("arrow")}</a><a class="btn btn-glass" href="#/learn/stories">Open Story 6 ${ic("chev")}</a>`) + `
       <nav class="grid3 g-quick" aria-label="Learning shortcuts">${tiles.map(([obj, c, t, sub, href], i) => href.startsWith("scroll:")
         ? c3({ tag: "button", attrs: `type="button" data-scroll="${href.slice(7)}"`, c, obj, title: t, sub, i, cls: "c3-tile" })
@@ -495,22 +517,23 @@
       const steps = [["x-headph", "Listen", "to a story", "ok"], ["x-books", "Understand", "words, order and reasons", "ok"], ["x-masks", "Become", "a character on stage", "now"], ["x-mic", "Speak", "alone, as yourself", ""], ["x-clip2", "Reflect", "on how you grew", ""]];
       const tools = [["t-books", "Storybooks"], ["t-seq", "Story sequencing cards"], ["t-dice", "Story dice"], ["t-words", "Words of the day"], ["t-speak", "My speaking cards"], ["t-puppets", "Finger puppets"], ["t-stage", "Little stage mat"], ["t-journey", "3L Journey Book"], ["t-family", "Family challenge cards"], ["t-stickers", "Achievement stickers"]];
       return hero(`Learn with ${swoosh("Stories.")}`, "A step-by-step learning journey that builds language, confidence and life skills.",
-        `<span class="hero-pic hero-scene">${art("s-stories", "The StoryBox and LEAP kits beside a smiling student")}</span>`) + `
+        `<span class="hero-pic hero-scene">${learningScene("kits")}</span>`) + `
       <ol class="grid3 g-steps" aria-label="Every 12-session cycle">${steps.map(([obj, t, d, st], i) => `<li class="step3 rv ${st}" style="--i:${i}"><span class="s3-n">${st === "ok" ? ic("check") : i + 1}</span><span class="s3-t"><b>${t}</b><small>${d}</small></span><span class="s3-obj">${art(obj)}</span></li>`).join("")}</ol>
 
-      <div class="card feature rv">
+      <section class="sec3">${secHead("sb-h", "Everything in the StoryBox.", "Ten hands-on tools for school and home.", "", true)}
+        <div class="grid3 g-tools">${tools.map(([obj, t], i) => `<button type="button" class="tool3 rv" style="--i:${i}" data-toast="${t}: part of the 3L StoryBox, used in class and at home."><span class="tool3-obj">${art(obj)}</span><b>${t}</b><span class="go3" aria-hidden="true">${ic("arrow")}</span></button>`).join("")}</div></section>
+
+      <section class="band3 rv">${deco()}<span class="band3-obj">${art("x-clapper")}</span><div><h2>Rehearse together tonight. <i class="rays rays-w" aria-hidden="true"></i></h2><p>Play the Crow's lines with ${DEMO.child} for ten minutes and record his practice.</p></div><a class="btn btn-white" href="#/learn/home">See home tasks ${ic("arrow")}</a></section>
+      <details class="story-library"><summary>Story 6 and the Season 2 library ${ic("down")}</summary>      <div class="card feature rv">
         <button class="video" data-toast="Video playback arrives when Learn launches."><span class="vplay">${ic("play")}</span><span class="vcap">The Clever Crow · rehearsal · 2:14</span></button>
         <div class="fr-b"><span class="tag tag-now">Now</span><b>Story 6 · The Clever Crow</b><p>A thirsty crow finds a clever way to reach the water. Aarav plays the Crow and practises the narrator's lines.</p>
           <div class="fr-row"><span>${ic("cal")}Performance Saturday</span><span>${ic("clock")}12 sessions</span></div></div>
       </div>
 
-      <section class="sec3">${secHead("sb-h", "Everything in the StoryBox.", "Ten hands-on tools for school and home.", "", true)}
-        <div class="grid3 g-tools">${tools.map(([obj, t], i) => `<button type="button" class="tool3 rv" style="--i:${i}" data-toast="${t}: part of the 3L StoryBox, used in class and at home."><span class="tool3-obj">${art(obj)}</span><b>${t}</b><span class="go3" aria-hidden="true">${ic("arrow")}</span></button>`).join("")}</div></section>
-
       ${head("Season 2", "16 original episodes")}
       ${rows([["done", "1 · The Mango Tree Gang", "Performed"], ["done", "2 · The Brave Little Ant", "Performed"], ["done", "3 · Sharing the Sun", "Performed"], ["done", "4 · The Lost Kite", "Performed"], ["done", "5 · The Honest Woodcutter", "Performed · video reviewed"], ["now", "6 · The Clever Crow", "Rehearsing", "Now"], ["lock", "7 · The Lion and the Mouse", "Unlocks after Story 6"], ["lock", "8 · The Talking Drum", "Coming up"]], "#0A84FF")}
 
-      <section class="band3 rv">${deco()}<span class="band3-obj">${art("x-clapper")}</span><div><h2>Rehearse together tonight. <i class="rays rays-w" aria-hidden="true"></i></h2><p>Play the Crow's lines with ${DEMO.child} for ten minutes and record his practice.</p></div><a class="btn btn-white" href="#/learn/home">See home tasks ${ic("arrow")}</a></section>`;
+</details>`;
     }
     if (tab === "assess") {
       const sc = ["Still learning", "Getting there", "I can do it!"];
@@ -727,7 +750,7 @@
     ["chart", "Assessment & Skill Passport", "Use the five-level rubric and the evidence workflow.", 1, 3, "#16A34A", "Certificate"],
   ];
   const progCard = ([i, t, d, dn, n, c, tag], k) => `<a class="prc rv" href="#/ayati/modules" style="--c:${c};--i:${k}">${gi(i, c)}<span class="tag">${tag}</span><b>${t}</b><p>${d}</p>${bar(Math.round(dn / n * 100), c)}<small>${dn} of ${n} modules</small></a>`;
-  const VIDART = { "The Skilido way": "vid-4", "Running a 3L session": "vid-1", "Coaching a LEAP team": "vid-2", "Assessing with the rubric": "teacher" };
+  const VIDART = { "The Skilido way": "x-qbook", "Running a 3L session": "x-masks", "Coaching a LEAP team": "x-fly", "Assessing with the rubric": "x-qshield" };
   const COURSEART = { "3L Facilitation": "course-2", "LEAP Facilitation": "course-1" };
   function ayatiRoleBlock() {
     const t = true;
@@ -737,7 +760,7 @@
     const lid = "lv-t";
     return `
       <section class="sec-s">${head(`${gi("play", "#7C3AED", "gi-xs")}Learn and watch`, t ? "Core modules for Skill Champions." : "Short, practical videos for home.", `<a class="tlink" href="#/ayati/${t ? "modules" : "live"}">View all ${ic("chev")}</a>`)}
-        <div class="vids">${vids.map(([i, c, title, meta, dur], n) => `<button class="vid rv" style="--c:${c};--i:${n}" data-toast="Videos play inside Ayati Academy when it launches."><span class="vid-art${VIDART[title] ? " vid-photo" : ""}">${VIDART[title] ? art(VIDART[title]) : gi(i, c, "gi-md")}<span class="vid-play">${ic("play")}</span><span class="dur">${dur}</span></span><b>${title}</b><small>${meta}</small></button>`).join("")}</div>
+        <div class="vids">${vids.map(([i, c, title, meta, dur], n) => `<button class="vid rv" style="--c:${c};--i:${n}" data-toast="Videos play inside Ayati Academy when it launches."><span class="vid-art${VIDART[title] ? " vid-photo" : ""}">${VIDART[title] ? art(VIDART[title]) : gi(i, c, "gi-md")}<span class="vid-play">${ic("play")}</span><span class="dur">${dur}</span></span><b>${title}</b><small>${meta}</small><span class="go3 vid-arrow" aria-hidden="true">${ic("arrow")}</span></button>`).join("")}</div>
       </section>
       <section class="duo">
         <div class="panel panel3 has-art rv">${deco()}<span class="p3-art float" aria-hidden="true">${art("x-capbook")}</span><h2 class="panel-h">${gi("award", "#7C3AED", "gi-sm")}${t ? "Certification courses" : "Courses for you"}<i class="rays" aria-hidden="true"></i></h2><p class="muted">${t ? "Get certified. Build your expertise." : "Learn at your own pace."}</p>
@@ -760,8 +783,8 @@
   function ayatiPane(tab) {
     const live = (when, t, d, btn, id) => `<div class="card live rv"><span class="badge-live"><i></i>${when}</span><b>${t}</b><small>${d}</small><button class="btn btn-white btn-sm" data-register="${id}" aria-pressed="${registered.has(id)}">${registered.has(id) ? `${ic("check")}Registered` : btn}</button></div>`;
     if (tab === "overview") return hero(`<span class="brandblk"><span class="bb-l">${gi("cap", "#7C3AED", "gi-bb")}<span><span class="bb-n">Ayati Academy</span><span class="bb-t">Learn · Train · Empower</span></span></span><span class="bb-d" aria-hidden="true"></span><span class="bb-r">For ${swoosh("teachers")}</span></span>`, "Practical training, classroom resources and certification for teachers and Skill Champions.",
-        `<span class="art-main art-obj art-cap">${art("x-capbook")}</span>`,
-        `<a class="btn btn-sun" href="#/ayati/modules">Continue Module 4 ${ic("arrow")}</a><a class="tlink tlink-lg" href="#/ayati/programs">All courses ${ic("chev")}</a>`) + `
+        `<span class="hero-pic hero-scene">${learningScene("teachers")}</span>`,
+        `<a class="btn btn-sun" href="#/ayati/modules">Continue Module 4 ${ic("arrow")}</a><a class="btn btn-glass" href="#/ayati/programs">All courses ${ic("chev")}</a>`) + `
       <div id="role-block">${ayatiRoleBlock()}</div>
       <a class="card xlink rv" href="${PLATFORMS.club.url}" data-x="club" style="--x:#4F46E5">${gi("users", "#4F46E5")}<span><b>Ayati modules are live in Icons Family Club</b><small>Teachers take today's modules in the Club's teacher space.</small></span>${ic("ext")}</a>`;
     if (tab === "programs") return banner("award", "Courses", "Certification tracks for teachers and Skill Champions") + `<div class="prgrid">${PROGRAMS.map(progCard).join("")}</div>`;

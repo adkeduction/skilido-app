@@ -1,6 +1,6 @@
 # Skilido One (demo)
 
-Mobile-first Skilido website. Every visit starts at the Skilido sign-in; after sign-in the dashboard opens. Static files only: `index.html`, `styles.css`, `app.js`, `assets/brand/`. No backend. Not published anywhere.
+Mobile-first Skilido website. Every visit starts at the Skilido sign-in; after sign-in the dashboard opens. Static files only: `index.html`, `styles.css`, `app.js`, `reference.css`, `assets/`. No backend. Current website: https://one.skilido.com/. This workspace prepares the reference-design release.
 
 ## Run locally
 ```bash
@@ -33,4 +33,10 @@ python3 -m http.server 4321
 AP LEAPs has been removed. All links are in the `PLATFORMS` object at the top of `app.js`.
 
 ## Deploy (only after approval)
-Upload `index.html`, `styles.css`, `app.js` and `assets/` to the root of a subdomain. When files change, bump `?v=` on the CSS and JS links in `index.html`.
+Upload `index.html`, `styles.css`, `reference.css`, `app.js` and `assets/` to the root of a subdomain. When files change, bump `?v=` on the CSS and JS links in `index.html`.
+
+## Generated reference design · 23 November 2026
+
+Built on current production source commit `1005fd4`, preserving Learn assessments, teacher-only Ayati and LifeLab stars/deadlines. The Home, Learn, Stories and Ayati interfaces are semantic components. The reference images are not pasted into the site. Newly generated transparent student, kits, educators and a 16-icon atlas are composed within coded backgrounds and layouts. Production assets live in `assets/generated`; prompt specifications are in `assets/generated/PROMPTS.md`.
+
+JavaScript syntax, CSS parsing, and DOM interaction checks passed across 14 routes, including sign-in, search, tasks and registration. Browser visual QA covered desktop Home/Learn/Stories/Ayati, phone Home/Ayati, and tablet Stories. Generated assets loaded, with no horizontal page overflow at the checked phone/tablet widths. Hosting publication requires an authenticated Hostinger session; a GitHub push alone is not proof of a live deployment.
