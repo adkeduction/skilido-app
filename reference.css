@@ -418,3 +418,9 @@ body { background:radial-gradient(ellipse at 15% 42%,#fbedff9c,transparent 48%),
   .phx:has(.hero-scene) .phx-copy { width:50%; max-width:50%; }
   .prod[data-prod="ayati"] .phx-copy { width:53%; max-width:53%; }
 }
+
+/* Explore holds eight tiles (products and platforms, plus Spotlight and Family Club): four per row */
+@media(min-width:768px) { .g-explore { grid-template-columns:repeat(4,minmax(0,1fr)); } }
+@media(min-width:1100px) { .g-explore { grid-template-columns:repeat(4,minmax(0,1fr)); } .g-explore .c3-t b { white-space:normal; } }
+/* drawn icons (Family Club) stay a square glossy tile instead of stretching across the card */
+.c3-obj .art-drawn { aspect-ratio:1; height:100%; width:auto; max-width:100%; margin-inline:auto; }

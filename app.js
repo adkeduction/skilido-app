@@ -102,14 +102,15 @@
     // tab change inside a product page
     if (prev.view === "product" && next.view === "product" && prev.p === next.p) {
       if (prev.tab === next.tab) return;
-      const order = PRODUCTS[next.p].tabs.map((t) => t[0]);
-      vt(() => {
-        $("#pane").innerHTML = paneHTML(next.p, next.tab);
-        setTabs(next.tab);
-        enhance($("#pane"));
-        const ln = $(".lnav"); if (ln && scrollY > ln.offsetTop) scrollTo({ top: ln.offsetTop - 0, behavior: "instant" });
-        cur = next;
-      }, order.indexOf(next.tab) > order.indexOf(prev.tab) ? "tab-fwd" : "tab-back");
+      // swap the section at once with a short fade (a view transition here stacked with the reveal and left a blank gap)
+      const pane = $("#pane");
+      pane.innerHTML = paneHTML(next.p, next.tab);
+      setTabs(next.tab);
+      const ln = $(".lnav"); if (ln && scrollY > ln.offsetTop) scrollTo({ top: ln.offsetTop, behavior: "instant" });
+      enhance(pane);
+      pane.classList.toggle("pane-in", false); void pane.offsetWidth; pane.classList.toggle("pane-in", true);
+      document.title = `${PRODUCTS[next.p].name} · Skilido`;
+      cur = next;
       return;
     }
     const opening = prev.view === "home" && next.view === "product";
@@ -297,6 +298,8 @@
     ["bazaar", "x-bazaar", "Kids' own creations and products"],
     ["ayati", "x-ayati", "Training and certification for teachers"],
     ["lifelab", "x-lifelab", "Build life skills like confidence, empathy and teamwork"],
+    ["spotlight", "x-mic", "The national stage for young talent and achievers"],
+    ["club", "x-club", "Icons Family Club: activities, perks and parent circles"],
   ];
   // shared 3D card: pastel tile, floating object, title, text, arrow chip
   const c3 = ({ tag = "a", attrs = "", c, obj, title, sub, ext = false, cls = "", i = 0, alt = "" }) =>
@@ -421,10 +424,56 @@
       ${how3("hb-h", "How badges work", "", [["x-qvideo", "Show it", "Aarav does the activity in class, at home or on stage."], ["x-myclip", "Check it", "A teacher or Skill Champion checks it against the rubric."], ["t-stickers", "Earn it", "The badge appears here and on his Skill Passport."]])}`,
     "ayati/programs": () => {
       const dn = PROGRAMS.reduce((a, x) => a + x[3], 0), n = PROGRAMS.reduce((a, x) => a + x[4], 0);
-      return `<section class="stats3 rv">${[["x-books", `${dn}/${n}`, "Modules completed"], ["x-qshield", String(PROGRAMS.length), "Certification tracks"], ["x-mic", "2", "Live sessions this week"]].map(([obj, v, l], i) => `<div style="--i:${i}"><span class="st3-obj">${art(obj)}</span><span><b>${v}</b><small>${l}</small></span></div>`).join("")}</section>`;
+      return `<section class="stats3 rv">${[["x-books", `${dn}/${n}`, "Modules completed"], ["x-qshield", String(PROGRAMS.length), "Certification tracks"], ["x-mic", "2", "Live sessions this week"]].map(([obj, v, l], i) => `<div style="--i:${i}"><span class="st3-obj">${art(obj)}</span><span><b>${v}</b><small>${l}</small></span></div>`).join("")}</section>`
+        + how3("pt-h", "Which track is right for you?", "Pick by the grades you teach.", [
+        ["x-masks", "LKG to Grade 2", "3L Facilitation: story, drama and speaking.", "#C026D3"],
+        ["x-fly", "Grades 3 to 10", "LEAP Facilitation: ventures and problem-solving.", "#F04E23"],
+        ["x-qshield", "Any grade", "Skill Champion: assessing with the rubric.", "#16A34A"]]);
     },
     "ayati/live": () => how3("hl-h", "How live sessions work", "Join from inside Skilido, nothing to install.", [["x-myclip", "Register", "Tap Remind me or Register on any session."], ["x-mycal", "Get a reminder", "Skilido notifies you 30 minutes before."], ["x-qvideo", "Join live", "The join link opens here at start time."]]),
     "ayati/certificates": () => how3("hc-h", "Every certificate can be verified", "Schools and employers check it with one link.", [["x-capbook", "Complete the course", "Finish every module and the practice task."], ["x-qshield", "Get verified", "An Ayati assessor reviews your final task."], ["x-folder", "Share it", "Download the PDF or share the verification link."]]),
+    "learn/stories": () => how3("sw-h", "How a 3L story session works", "One story, five short steps, about 30 minutes.", [
+      ["x-headph", "Listen", "Hear the story read aloud with expression.", "#0A84FF"],
+      ["x-qbook", "Understand", "New words, the order of events and why things happened.", "#7C3AED"],
+      ["x-masks", "Become", "Act out a character with the puppets and masks.", "#C026D3"],
+      ["x-mic", "Speak & reflect", "Retell it in your own words and share what you learnt.", "#F26B1D"]])
+      + how3("sh-h", "Keep the story going at home", "Small ideas for the rest of the week.", [
+      ["x-masks", "Swap roles", "Aarav plays the Crow, you play the narrator.", "#C026D3", "#/learn/home"],
+      ["x-books", "Draw the ending", "Make a new ending and tell it at dinner.", "#0A84FF", "#/learn/home"],
+      ["x-qshield", "Quick quiz", "Five friendly questions on Story 6.", "#16A34A", "#/learn/assess"]]),
+    "learn/leap": () => how3("lp-h", "The LEAP venture journey", "Eight modules from an idea to Sales Day.", [
+      ["x-lifelab", "Spot a problem", "Modules 1–4: notice, ask and pick the best problem.", "#EAB308"],
+      ["x-myclip", "Plan the solution", "Modules 5–6: design it, cost it, test it.", "#0A84FF"],
+      ["x-fly", "Build the venture", "Module 7: the team runs it as a company on FLY.", "#F04E23", PLATFORMS.fly.url],
+      ["x-bazaar", "Sales Day", "Module 8: sell the product on FLY Bazaar.", "#F59E0B", PLATFORMS.bazaar.url]])
+      + how3("lps-h", "Skills LEAP builds", "Each module adds evidence to the Skill Passport.", [
+      ["x-mic", "Confidence", "Pitching to classmates and parents.", "#F26B1D", "#/passport/skills"],
+      ["x-qchart", "Critical thinking", "Comparing problems and choosing one.", "#16A34A", "#/passport/skills"],
+      ["x-headph", "Teamwork", "Working in a venture team of four.", "#7C3AED", "#/passport/skills"]]),
+    "learn/home": () => how3("hm-h", "More ten-minute ideas", "No kit needed. Each one builds a Skill Passport skill.", [
+      ["x-mic", "One-minute talk", "Aarav explains something he learnt today.", "#0A84FF"],
+      ["x-books", "Story order", "Shuffle the sequencing cards and rebuild the story.", "#7C3AED"],
+      ["x-qhouse", "Spot a problem", "Find one small problem at home and suggest a fix.", "#16A34A"],
+      ["x-masks", "Feelings charades", "Act a feeling without words; others guess.", "#C026D3"]])
+      + `<p class="fine">${ic("shield")}Ticked tasks show on the Skill Passport as learning activity. Only teacher-verified evidence moves a skill level.</p>`,
+    "ayati/modules": () => how3("mw-h", "How each module works", "About 45 minutes, done at your own pace.", [
+      ["x-qvideo", "Watch", "A short video of the method in a real class.", "#7C3AED"],
+      ["x-books", "Read", "The facilitator notes and a one-page summary.", "#0A84FF"],
+      ["x-myclip", "Practise", "Try it with your class and upload one piece of evidence.", "#16A34A"],
+      ["x-qshield", "Check", "A short quiz unlocks the next module.", "#F59E0B"]])
+      + how3("mr-h", "Classroom resources", "Ready to print or project.", [
+      ["x-folder", "Lesson plans", "Week-by-week plans for 3L and LEAP.", "#0A84FF"],
+      ["x-qshield", "Rubric cards", "The five-level rubric for each skill.", "#16A34A"],
+      ["x-masks", "Story kits", "Puppet scripts and speaking cards.", "#C026D3"]]),
+    "passport/journey": () => how3("jn-h", "How a skill moves up a level", "Every move has a source you can open.", [
+      ["x-qvideo", "Practise", "Aarav uses the skill in class, at home or on stage.", "#0A84FF"],
+      ["x-myclip", "Evidence", "A teacher records a video, photo or note.", "#7C3AED"],
+      ["x-qshield", "Verify", "It is scored against the five-level rubric.", "#16A34A"],
+      ["x-schart", "Level up", "The new level appears here and in Evidence.", "#F59E0B", "#/passport/timeline"]])
+      + how3("jx-h", "Next review", "Teacher reviews happen every term.", [
+      ["x-mycal", "Term 2 review", "12 February · Ms. Priya, Accord School.", "#7C3AED"],
+      ["x-lifelab", "Before then", "Finish the Save Water challenge for Problem-Solving.", "#16A34A", "#/lifelab/challenges"],
+      ["x-mic", "Spotlight entry", "A stage performance counts towards Confidence.", "#C026D3", PLATFORMS.spotlight.url]]),
     "lifelab/challenges": () => EXTRA["lifelab/open"](),
     "lifelab/open": () => how3("hw-h", "How a challenge works", "Four steps, about two weeks, one real result.", [["x-headph", "Understand", "Talk to the people who have the problem.", "#0EA5E9"], ["x-lifelab", "Ideate", "Sketch ideas as a team and pick one.", "#F59E0B"], ["x-qhouse", "Build", "Make a simple prototype and test it.", "#16A34A"], ["x-mic", "Present", "Show the result and earn verified evidence.", "#7C3AED"]]),
     "lifelab/post": () => how3("gc-h", "What makes a good challenge", "Reviewers look for these three things.", [["x-qhouse", "Real and local", "A problem children can see at school, at home or nearby.", "#16A34A"], ["x-qshield", "Safe to solve", "No risk, no money, and an adult nearby.", "#F59E0B"], ["x-schart", "Clear success", "A result you can measure in two to three weeks.", "#0A84FF"]]),
@@ -443,7 +492,7 @@
     "x-qhouse":10,"x-headph":11,"x-books":12,"x-masks":13,
     "t-stage":13,"x-mic":14,"x-micbooks":14,"t-speak":14,"x-clapper":15
   };
-  const TOOL_ICONS = {"t-seq":"layers","t-dice":"dice","t-words":"msg","t-puppets":"users","t-journey":"book","t-family":"heart","t-stickers":"star","x-folder":"folder","x-trophy":"award"};
+  const TOOL_ICONS = {"t-seq":"layers","t-dice":"dice","t-words":"msg","t-puppets":"users","t-journey":"book","t-family":"heart","t-stickers":"star","x-folder":"folder","x-trophy":"award","x-club":"users"};
   const art = (name, alt = "", cls = "") => {
     if (Object.hasOwn(SPRITES,name)) {
       const n=SPRITES[name], x=(n%4)*100/3, y=Math.floor(n/4)*100/3;
@@ -966,9 +1015,11 @@
     }
     if ("IntersectionObserver" in window && !reduce.matches) {
       if (!io) io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -6% 0px" });
-      $$(".rv:not(.in)", scope).forEach((el) => io.observe(el));
-      const seen = () => $$(".rv:not(.in)", scope).forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) el.classList.add("in"); });
-      requestAnimationFrame(() => requestAnimationFrame(seen)); setTimeout(seen, 450);
+      $$(".rv:not(.in)", scope).forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < innerHeight && r.bottom > 0) { el.style.transition = "none"; el.classList.add("in"); requestAnimationFrame(() => requestAnimationFrame(() => (el.style.transition = ""))); }
+        else io.observe(el);
+      });
     } else $$(".rv", scope).forEach((el) => el.classList.add("in"));
     // count up
     $$("[data-count]", scope).forEach((el) => {
