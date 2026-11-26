@@ -140,12 +140,30 @@
     const orbit = [...P_ORDER.map((k) => PRODUCTS[k]), ...X_ORDER.map((k) => PLATFORMS[k])];
     return `
     <div class="login">
-      <aside class="login-art" aria-hidden="true">
-        <img class="la-logo" src="assets/brand/skilido-light.webp" alt="" width="140" height="42">
-        <div class="orbit">${orbit.map((x, i) => `<span class="orb" style="--c:${x.c};--i:${i}">${ic(x.icon)}</span>`).join("")}<span class="orbit-core"><img src="assets/brand/skilido-light.webp" alt="" width="120" height="36"></span></div>
-        <p class="la-line">One account.<br><span>Every Skilido product.</span></p>
+      <aside class="login-art">
+        <svg class="la-arc" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="laGold" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FF9A2C" stop-opacity="0"/><stop offset=".25" stop-color="#FFB02C"/><stop offset=".6" stop-color="#FFF3C4"/><stop offset="1" stop-color="#FFC72C" stop-opacity=".35"/></linearGradient><linearGradient id="laVio" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8E6BFF" stop-opacity="0"/><stop offset=".5" stop-color="#9D7BFF" stop-opacity=".7"/><stop offset="1" stop-color="#8E6BFF" stop-opacity="0"/></linearGradient></defs><path class="w" d="M-60 560C120 640 250 740 310 900C200 780 80 720 -60 700Z"/><path class="v" d="M-60 590C110 660 240 750 300 860" pathLength="100"/><path class="g" d="M240 900L1060 -40" pathLength="100"/><path class="l" d="M240 900L1060 -40" pathLength="100"/></svg>
+        <img class="la-logo" src="assets/brand/skilido-light.webp" alt="Skilido" width="170" height="51">
+        <img class="la-hero" src="assets/hero/hero-portrait-long.webp" srcset="assets/hero/hero-portrait-long.webp 720w, assets/hero/hero-portrait-long@2x.webp 1029w" sizes="(min-width:1000px) 30vw, 60vw" alt="Satya Dev" width="720" height="1372">
+        <div class="la-copy">
+          <h2>Don’t just prepare<br>your child for the future.<br><b>Prepare them to build it.<svg viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path d="M6 12C90 3 210 2 294 5" pathLength="100"/></svg></b></h2>
+          <p>A complete learning and entrepreneurship ecosystem for young creators, problem-solvers and future founders.</p>
+          <ul class="la-feats">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h6.5a2.5 2.5 0 0 1 2.5 2.5V20a2 2 0 0 0-2-2H3zM21 5h-6.5A2.5 2.5 0 0 0 12 7.5V20a2 2 0 0 1 2-2h7zM6 9h3M6 12.5h3M15 9h3M15 12.5h3"/></svg><span>Build<br>Real Skills</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15l-3-3a22 22 0 0 1 2-4 12.9 12.9 0 0 1 11-6c0 2.7-.8 7.5-6 11a22 22 0 0 1-4 2zM9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.6 4-2c1.1-1.6 0-5 0-5M15.5 8.5h.01"/></svg><span>Create<br>Real Solutions</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v4a5 5 0 0 1-10 0zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M10 17h4"/></svg><span>Launch<br>Real Ventures</span></li>
+          </ul>
+        </div>
+        <div class="la-who"><span class="tick" aria-hidden="true"></span><div class="who-in"><b>Satya Dev</b><span>Actor &amp; Entrepreneur</span><em>Satya Dev</em></div></div>
+        <img class="la-kids" src="assets/hero/hero-kids.webp" alt="Three students looking up and smiling" width="1430" height="722">
       </aside>
       <main class="login-main" id="screen">
+        <nav class="sinav" aria-label="About Skilido">
+          <button type="button" data-p="about" aria-expanded="false">About Skilido</button>
+          <button type="button" data-p="eco" aria-expanded="false">Our Ecosystem</button>
+          <a href="${PLATFORMS.spotlight.url}" target="_blank" rel="noopener">Spotlight</a>
+          <button type="button" data-p="schools" aria-expanded="false">For Schools</button>
+          <div class="sinav-pop" id="lnp" hidden></div>
+        </nav>
         <div class="lcard">
           <img class="lc-logo" src="assets/brand/skilido-dark.webp" alt="Skilido" width="128" height="38">
           <h1 tabindex="-1">Sign in</h1>
@@ -181,6 +199,18 @@
   }
   function bindLogin() {
     const f = $("#lf"), id = $("#lid"), pw = $("#lpw"), btn = $("#go");
+    // top links: short panels about Skilido, the ecosystem and schools
+    const pop = $("#lnp"), tabs = [...document.querySelectorAll(".sinav [data-p]")];
+    const INFO = {
+      about: `<h3>About Skilido</h3><p>Skilido is a learning and entrepreneurship ecosystem for school children. They build real skills, solve real problems and launch real ventures, with their parents and teachers alongside.</p>`,
+      eco: `<h3>Our ecosystem</h3><ul>${P_ORDER.map((k) => `<li><b>${PRODUCTS[k].name}</b><span>${PRODUCTS[k].sub}</span></li>`).join("")}${X_ORDER.map((k) => `<li><a href="${PLATFORMS[k].url}" target="_blank" rel="noopener"><b>${PLATFORMS[k].name}</b><span>${PLATFORMS[k].sub}</span></a></li>`).join("")}</ul>`,
+      schools: `<h3>For schools</h3><p>Schools bring Skilido to their students with FLY for young founders, teacher training through Ayati Academy, and a school page in the Family Club. Sign in with your school account to manage them.</p>`,
+    };
+    const closePop = () => { pop.hidden = true; tabs.forEach((t) => t.setAttribute("aria-expanded", "false")); };
+    tabs.forEach((t) => t.addEventListener("click", (e) => { e.stopPropagation(); const open = !pop.hidden && pop.dataset.k === t.dataset.p; closePop(); if (open) return; pop.dataset.k = t.dataset.p; pop.innerHTML = INFO[t.dataset.p]; pop.hidden = false; t.setAttribute("aria-expanded", "true"); }));
+    pop.addEventListener("click", (e) => e.stopPropagation());
+    $(".login").addEventListener("click", closePop);
+    $(".login").addEventListener("keydown", (e) => { if (e.key === "Escape") closePop(); });
     const err = (el, box, msg) => { $(box).textContent = msg; el.closest(".fld").classList.toggle("bad", !!msg); if (msg) shake(el.closest(".fld")); };
     id.addEventListener("input", () => err(id, "#lid-err", ""));
     pw.addEventListener("input", () => err(pw, "#lpw-err", ""));

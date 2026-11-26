@@ -1521,3 +1521,84 @@ a.how3:active { background: color-mix(in srgb, var(--c) 6%, #fff); }
 .pane-in { animation: paneIn .22s var(--ease) both; }
 @keyframes paneIn { from { opacity: 0; transform: translateY(6px); } }
 @media (prefers-reduced-motion: reduce) { .pane-in { animation: none; } }
+
+/* ================= LOGIN v93: hero panel and sign-in card ================= */
+.login { position: relative; }
+.login-main { position: relative; display: flex; flex-direction: column; align-items: center; padding: max(20px, env(safe-area-inset-top)) 16px 40px; background: linear-gradient(165deg, #F5F2FF 0%, #ECE8FC 60%, #E6E3F8 100%); }
+.sinav { background: none; box-shadow: none; position: relative; width: 100%; max-width: 560px; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 6px; margin-bottom: 18px; }
+.sinav > button, .sinav > a { min-height: 44px; padding: 0 8px; border-radius: 12px; font: 700 14px/44px var(--display); color: #0A1048; white-space: nowrap; transition: background-color .2s, transform .15s var(--ease); }
+.sinav > button:hover, .sinav > a:hover, .sinav > [aria-expanded="true"] { background: rgba(10, 16, 72, .07); }
+.sinav > button:active, .sinav > a:active { transform: scale(.96); }
+.sinav-pop { position: absolute; z-index: 5; top: calc(100% + 8px); left: 0; right: 0; padding: 18px 20px; border-radius: 20px; background: #fff; box-shadow: var(--sh-2), 0 0 0 1px var(--line); text-align: left; transform-origin: top center; animation: pop .22s var(--ease); }
+.sinav-pop h3 { font: 700 18px/1.2 var(--display); letter-spacing: -.01em; }
+.sinav-pop p { margin-top: 8px; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+.sinav-pop ul { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; }
+.sinav-pop li, .sinav-pop li a { display: grid; font-size: 14px; }
+.sinav-pop li span { color: var(--muted); font-size: 12.5px; }
+.sinav-pop li a b { color: #0A84FF; }
+.login .lcard { margin-block: auto; max-width: 560px; padding: 30px 22px 26px; border-radius: 28px; background: #fff; box-shadow: 0 1px 2px rgba(20, 20, 80, .05), 0 34px 60px -34px rgba(52, 40, 140, .45); }
+.login .lc-logo { display: none; }
+.login .lcard h1 { font-weight: 800; font-size: 40px; letter-spacing: -.035em; color: #0A1048; }
+.login .lc-sub { font-size: 17px; color: #3A4166; }
+.login .fld::before { content: ""; position: absolute; z-index: 1; left: 18px; top: 20px; width: 22px; height: 22px; background: #2A3160; -webkit-mask: var(--fi) center / contain no-repeat; mask: var(--fi) center / contain no-repeat; pointer-events: none; }
+.login .fld { --fi: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='3'/%3E%3Cpath d='m4 7 8 6 8-6'/%3E%3C/svg%3E"); }
+.login .fld-pw { --fi: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='11' width='14' height='9' rx='2.5'/%3E%3Cpath d='M8 11V8a4 4 0 0 1 8 0v3'/%3E%3C/svg%3E"); }
+.login .fld input { min-height: 62px; padding-left: 56px; border-radius: 14px; box-shadow: inset 0 0 0 1.5px #D6D8E6; }
+.login .fld input:focus { box-shadow: inset 0 0 0 2px #2F45D8, 0 0 0 4px rgba(47, 69, 216, .14); }
+.login .fld label { left: 57px; top: 21px; color: #2A3160; }
+.login .btn-primary { min-height: 58px; border-radius: 999px; font: 700 19px/1 var(--display); background: linear-gradient(180deg, #232C8C 0%, #0F1660 55%, #0A1048 100%); box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, .22), 0 16px 26px -16px rgba(10, 16, 72, .9); }
+.login .demo { box-shadow: 0 1px 2px rgba(20, 20, 80, .06), 0 14px 28px -18px rgba(52, 40, 140, .5), inset 0 0 0 1px rgba(10, 16, 72, .07); }
+.login .demo-t b { font-weight: 700; color: #0A1048; }
+
+/* hero panel: a compact banner on phones, the full left side on laptops */
+.login-art { display: block; position: relative; overflow: hidden; isolation: isolate; container-type: inline-size; height: 340px; color: #fff;
+  background: radial-gradient(56% 62% at 72% 42%, rgba(70, 110, 255, .9), transparent 72%), radial-gradient(60% 55% at 0% 82%, rgba(124, 58, 237, .55), transparent 70%), linear-gradient(120deg, #070B4A 0%, #0C1680 46%, #1B2EBC 100%); }
+.la-arc { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+.la-arc path { fill: none; stroke-linecap: round; }
+.la-arc .w { fill: rgba(128, 92, 255, .16); stroke: none; animation: laFade 1.4s ease .2s both; }
+.la-arc .v { stroke: url(#laVio); stroke-width: 2.5; stroke-dasharray: 100; stroke-dashoffset: 100; animation: laDraw 1.6s var(--spring) .2s forwards; }
+.la-arc .g { stroke: url(#laGold); stroke-width: 34; filter: blur(16px); opacity: .7; stroke-dasharray: 100; stroke-dashoffset: 100; animation: laDraw 1.5s var(--spring) .35s forwards; }
+.la-arc .l { stroke: url(#laGold); stroke-width: 3.5; stroke-dasharray: 100; stroke-dashoffset: 100; animation: laDraw 1.5s var(--spring) .35s forwards; }
+@keyframes laDraw { to { stroke-dashoffset: 0; } }
+@keyframes laFade { from { opacity: 0; } }
+.login-art .la-logo { position: absolute; left: 22px; top: 22px; height: 34px; width: auto; animation: rise .6s var(--ease) both; }
+.la-hero { position: absolute; right: -2cqw; bottom: -38%; height: 134%; width: auto; max-width: none; z-index: 1; filter: drop-shadow(0 0 60px rgba(80, 120, 255, .5)); animation: laHero 1.2s var(--spring) .15s both; }
+@keyframes laHero { from { opacity: 0; transform: translateX(28px) scale(1.04); } }
+.la-copy { position: absolute; z-index: 2; left: 22px; bottom: 22px; max-width: 58cqw; }
+.la-copy h2 { font: 700 clamp(20px, 5.6cqw, 30px)/1.16 var(--display); letter-spacing: -.03em; text-wrap: balance; animation: rise .7s var(--ease) .35s both; }
+.la-copy h2 b { position: relative; display: inline-block; color: var(--sun); font-weight: 800; }
+.la-copy h2 b svg { position: absolute; left: 0; bottom: -.36em; width: 100%; height: .3em; overflow: visible; clip-path: inset(-50% 100% -50% 0); animation: laWipe .7s var(--spring) 1.2s forwards; }
+.la-copy h2 b path { fill: none; stroke: var(--sun); stroke-width: 6; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+@keyframes laWipe { to { clip-path: inset(-50% -2% -50% 0); } }
+.la-copy p, .la-feats, .la-kids, .la-who { display: none; }
+@media (min-width: 1000px) {
+  .login { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+  .login-art { height: auto; min-height: 100svh; padding: 0; --hh: min(68svh, 62cqw); }
+  .login-art .la-logo { left: 7cqw; top: 4.8%; height: clamp(40px, 5.8cqw, 70px); }
+  .la-hero { left: 52.4cqw; right: auto; bottom: calc(14cqw - var(--hh) * .4); height: calc(var(--hh) * 1.4); }
+  .la-copy { left: 7cqw; top: 17.5%; bottom: auto; max-width: 56cqw; }
+  .la-copy h2 { font-size: clamp(26px, 4.55cqw, 60px); line-height: 1.17; }
+  .la-copy p { display: block; margin-top: clamp(26px, 6.2vh, 64px); max-width: 47cqw; font: 500 clamp(15px, 2.12cqw, 27px)/1.32 var(--font); color: rgba(255, 255, 255, .94); animation: rise .7s var(--ease) .55s both; }
+  .la-feats { display: flex; list-style: none; padding: 0; margin: clamp(24px, 5.8vh, 60px) 0 0; animation: rise .7s var(--ease) .75s both; }
+  .la-feats li { display: grid; justify-items: center; gap: 10px; padding: 0 clamp(12px, 2cqw, 26px); text-align: center; font: 700 clamp(13px, 1.68cqw, 21px)/1.3 var(--font); }
+  .la-feats li:first-child { padding-left: 1cqw; }
+  .la-feats li + li { border-left: 1px solid rgba(255, 255, 255, .34); }
+  .la-feats svg { width: clamp(34px, 4.7cqw, 58px); height: auto; fill: none; stroke: var(--sun); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .la-who { display: block; position: absolute; z-index: 3; left: 85.2cqw; top: calc(100% - 14cqw - var(--hh) * .82); animation: rise .7s var(--ease) 1.1s both; }
+  .la-who .tick { display: block; width: clamp(24px, 3.6cqw, 42px); aspect-ratio: 26 / 22; margin: 0 0 .8cqw 52%; background: var(--sun); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 22' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M4 3l3 6M13 2l-1 7M22 6l-5 5'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 22' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M4 3l3 6M13 2l-1 7M22 6l-5 5'/%3E%3C/svg%3E") center / contain no-repeat; }
+  .who-in { display: grid; justify-items: center; text-align: center; padding-left: 1.3cqw; border-left: 1px solid rgba(255, 255, 255, .6); }
+  .who-in b { font: 800 clamp(15px, 1.9cqw, 24px)/1.2 var(--display); letter-spacing: -.01em; white-space: nowrap; }
+  .who-in span { font: 500 clamp(10px, 1.18cqw, 15px)/1.4 var(--font); color: rgba(255, 255, 255, .9); white-space: nowrap; }
+  .who-in em { margin-top: .5cqw; font: 400 clamp(22px, 3.1cqw, 40px)/1.05 "Great Vibes", "Snell Roundhand", cursive; font-style: normal; color: var(--sun); transform: rotate(-5deg); white-space: nowrap; }
+  .la-kids { display: block; position: absolute; z-index: 4; left: 28.9cqw; bottom: 0; width: 71.1cqw; height: auto; max-width: none; animation: laKids 1.1s var(--spring) .6s both; }
+  @keyframes laKids { from { opacity: 0; transform: translateY(46px); } }
+  .login-main { padding: 22px clamp(20px, 3.6vw, 56px) 40px; }
+  .sinav { justify-content: flex-end; max-width: none; margin-bottom: 20px; gap: 4px clamp(2px, .7vw, 14px); flex-wrap: nowrap; }
+  .sinav > button, .sinav > a { padding: 0 8px; font-size: clamp(13.5px, 1vw, 17px); }
+  .sinav-pop { left: auto; width: min(420px, 100%); }
+  .login .lcard { padding: clamp(28px, 2.6vw, 44px) clamp(24px, 2.5vw, 42px); }
+  .login .lcard h1 { font-size: clamp(40px, 3.3vw, 56px); }
+  .login .lc-sub { font-size: clamp(17px, 1.3vw, 22px); margin-bottom: 28px; }
+}
+@media (max-width: 480px) { .sinav { display: grid; grid-template-columns: auto auto; justify-content: center; gap: 0 22px; } .sinav > button, .sinav > a { text-align: center; } }
+@media (prefers-reduced-motion: reduce) { .login-art *, .login-art { animation-duration: .01ms !important; animation-delay: 0s !important; } }
